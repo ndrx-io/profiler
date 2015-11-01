@@ -1,6 +1,7 @@
 <?php
 
-namespace Ndrx\Context\Contracts;
+namespace Ndrx\Profiler\Context\Contracts;
+
 use Ndrx\Profiler\Process;
 
 /**

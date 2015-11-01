@@ -1,9 +1,8 @@
 <?php
 
-namespace Ndrx\Context;
+namespace Ndrx\Profiler\Context;
 
 use Ndrx\Profiler\Process;
-use Ndrx\Profiler\Session;
 
 /**
  * Created by PhpStorm.
@@ -18,7 +17,7 @@ class Cli extends Context
     {
         parent::initiate();
 
-        $this->process = Process::build(Session::build());
+        $this->process = Process::build();
     }
 
     public function sendDebugIds()

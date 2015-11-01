@@ -8,6 +8,12 @@
 
 namespace Ndrx\Profiler;
 
+use Rs\Json\Patch;
+use Rs\Json\Patch\InvalidPatchDocumentJsonException;
+use Rs\Json\Patch\InvalidTargetDocumentJsonException;
+use Rs\Json\Patch\InvalidOperationException;
+use Rs\Json\Patch\FailedTestException;
+
 /**
  * Class JsonPatch
  * @package Ndrx\Profiler
@@ -37,8 +43,63 @@ class JsonPatch
     {
         return [
             'op' => $action,
-            'path' => $path . ($append ? '/-' : ''),
+            'path' => '/' . $path . ($append ? '/-' : ''),
             'value' => $value
         ];
+    }
+
+    /**
+     * @param $path
+     * @param $items
+     * @param bool|false $append
+     * @return array
+     */
+    public function generateArrayAdd($path, $items, $append = false)
+    {
+        $patches = [];
+        $rootParentCreated = false;
+        foreach ($items as $key => $element) {
+            if(!$rootParentCreated) {
+                $patches[] = $this->generate($path, JsonPatch::ACTION_ADD, [], false);
+                $rootParentCreated = true;
+            }
+
+            $elementPath = $path;
+            if (!$append && is_string($key)) {
+                $elementPath .= '/' . $key;
+            }
+
+            $patches[] = $this->generate($elementPath, JsonPatch::ACTION_ADD, $element, $append);
+        }
+
+        return $patches;
+    }
+
+
+    /**
+     * @param $patchs
+     * @return mixed
+     */
+    public function compile($patchs)
+    {
+        $targetDocument = '{}';
+
+        foreach ($patchs as $patch) {
+            try {
+
+                $patch = new Patch($targetDocument, $patch);
+                $targetDocument = $patch->apply();
+            } catch (InvalidPatchDocumentJsonException $e) {
+                echo $e->getMessage();
+            } catch (InvalidTargetDocumentJsonException $e) {
+                echo $e->getMessage();
+            } catch (InvalidOperationException $e) {
+                echo $e->getMessage();
+            } catch (FailedTestException $e) {
+                echo $e->getMessage();
+            }
+        }
+
+        return json_decode($targetDocument);
     }
 }

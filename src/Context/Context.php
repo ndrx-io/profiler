@@ -6,10 +6,10 @@
  * Time: 16:42
  */
 
-namespace Ndrx\Context;
+namespace Ndrx\Profiler\Context;
 
 
-use Ndrx\Context\Contracts\ContextInterface;
+use Ndrx\Profiler\Context\Contracts\ContextInterface;
 use Ndrx\Profiler\Process;
 use Symfony\Component\HttpFoundation\Request;
 

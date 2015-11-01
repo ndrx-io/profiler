@@ -44,7 +44,7 @@ abstract class Collector implements CollectorInterface
         $this->process = $process;
         $this->jsonPatch = $jsonPatch;
 
-        if(is_null($jsonPatch)) {
+        if ($jsonPatch === null) {
             $this->jsonPatch = new JsonPatch();
         }
     }
@@ -55,13 +55,13 @@ abstract class Collector implements CollectorInterface
      */
     public function persist()
     {
-        if(!is_array($this->data)) {
+        if (!is_array($this->data)) {
             $this->data = [$this->data];
         }
 
-        foreach($this->data as $element) {
-            $this->dataSource->save($this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, $element, $this instanceof StreamCollectorInterface));
-        }
+        $append = $this instanceof StreamCollectorInterface;
+        $patches = $this->jsonPatch->generateArrayAdd($this->getPath(), $this->data, $append);
+        $this->dataSource->save($this->process, $patches);
 
         $this->data = [];
     }

@@ -25,7 +25,6 @@ class JsonPatchTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(JsonPatch::ACTION_ADD, $result['op']);
     }
 
-
     public function testMove()
     {
         $jsonPatch = new JsonPatch();

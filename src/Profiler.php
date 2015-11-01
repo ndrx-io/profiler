@@ -3,9 +3,9 @@
 namespace Ndrx\Profiler;
 
 
-use Ndrx\Context\Cli;
-use Ndrx\Context\Contracts\ContextInterface;
-use Ndrx\Context\Http;
+use Ndrx\Profiler\Context\Cli;
+use Ndrx\Profiler\Context\Contracts\ContextInterface;
+use Ndrx\Profiler\Context\Http;
 use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
@@ -43,13 +43,18 @@ class Profiler
     /**
      *
      */
-    public function __construct()
+    protected function __construct()
     {
         $this->collectors = [
             'initial' => [],
             'final' => [],
             'stream' => []
         ];
+    }
+
+    public function __destruct()
+    {
+        $this->terminate();
     }
 
     /**
@@ -62,16 +67,15 @@ class Profiler
         }
 
         self::$instance = new self();
-
         // set the good context
         switch (php_sapi_name()) {
             case 'cli':
 
-                self::$instance->context = new Http();
+                self::$instance->context = new Cli();
                 break;
 
             default:
-                self::$instance->context = new Cli();
+                self::$instance->context = new Http();
         }
 
         self::$instance->context->initiate();
@@ -101,6 +105,7 @@ class Profiler
     /**
      * Register multiple collector to the profiler
      * @param array $collectors
+     * @throws \RuntimeException
      */
     public function registerCollectors(array $collectors)
     {
@@ -112,6 +117,7 @@ class Profiler
     /**
      * Build and register collector class
      * @param $className
+     * @throws \RuntimeException
      */
     public function registerCollectorClass($className)
     {
@@ -129,5 +135,56 @@ class Profiler
         foreach ($collectors as $collector) {
             $this->registerCollectorClass($collector);
         }
+    }
+
+    /**
+     * Run start collector at the profiler creation
+     */
+    public function initiate()
+    {
+        $this->runGroup('initial');
+    }
+
+    /**
+     * Run final collectors, just before the profiler was destroy
+     */
+    public function terminate()
+    {
+        $this->runGroup('final');
+    }
+
+    public function runGroup($name)
+    {
+        /** @var CollectorInterface $collector */
+        foreach ($this->collectors[$name] as $collector) {
+            $collector->resolve();
+            $collector->persist();
+        }
+    }
+
+    /**
+     * @param DataSourceInterface $datasource
+     */
+    public function setDataSource($datasource)
+    {
+        $this->datasource = $datasource;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getProfile($id)
+    {
+
+        return (new JsonPatch())->compile($this->datasource->getProcess($id));
+    }
+
+    /**
+     * @return ContextInterface
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
 }
