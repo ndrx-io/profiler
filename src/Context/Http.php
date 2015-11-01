@@ -3,7 +3,6 @@
 namespace Ndrx\Profiler\Context;
 
 use Ndrx\Profiler\Process;
-use Ndrx\Profiler\Session;
 
 /**
  * Created by PhpStorm.

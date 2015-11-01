@@ -35,7 +35,7 @@ class PhpVersion extends Collector implements StartCollectorInterface
      *              bb: <VALUE OF RESOLVE>
      *       }
      *  }
-     * @return mixed
+     * @return string
      */
     public function getPath()
     {
