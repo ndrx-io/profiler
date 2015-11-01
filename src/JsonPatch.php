@@ -35,7 +35,7 @@ class JsonPatch
     /**
      * @param $path
      * @param $action
-     * @param $value
+     * @param array|string|boolean $value
      * @param $append
      * @return array
      */

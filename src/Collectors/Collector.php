@@ -18,7 +18,10 @@ use Ndrx\Profiler\Process;
 abstract class Collector implements CollectorInterface
 {
 
-    protected $data = [];
+    /**
+     * @var mixed
+     */
+    protected $data;
 
     /** @var  DataSourceInterface */
     protected $dataSource;
