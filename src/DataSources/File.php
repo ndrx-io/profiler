@@ -11,6 +11,7 @@ namespace Ndrx\Profiler\DataSources;
 
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Process;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -18,8 +19,14 @@ use Symfony\Component\Finder\SplFileInfo;
 class File implements DataSourceInterface
 {
 
+    /**
+     * @var string
+     */
     protected $folder;
 
+    /**
+     * @var Filesystem
+     */
     protected $filesystem;
 
     /**
@@ -32,6 +39,11 @@ class File implements DataSourceInterface
         $this->filesystem = new Filesystem();
     }
 
+    /**
+     * @param $processId
+     * @return \Generator
+     * @throws \InvalidArgumentException
+     */
     public function getProcess($processId)
     {
         $finder = new Finder();
@@ -46,18 +58,30 @@ class File implements DataSourceInterface
         }
     }
 
+    /**
+     * @throws IOException
+     */
     public function clear()
     {
         $finder = new Finder();
         $this->filesystem->remove($finder->in($this->folder));
     }
 
+    /**
+     * @throws IOException
+     * @throws \InvalidArgumentException
+     */
     public function deleteProcess($processId)
     {
         $finder = new Finder();
         $this->filesystem->remove($finder->in($this->getProcessFolder($processId)));
     }
 
+    /**
+     * @param Process $process
+     * @param array $item
+     * @throws IOException
+     */
     public function save(Process $process, array $item)
     {
         $processFolder = $this->getProcessFolder($process->getId());
@@ -70,6 +94,10 @@ class File implements DataSourceInterface
         file_put_contents($fileName, json_encode($item));
     }
 
+    /**
+     * @param $processId
+     * @return string
+     */
     protected function getProcessFolder($processId)
     {
         return $this->folder . DIRECTORY_SEPARATOR . $processId;

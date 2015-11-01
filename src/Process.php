@@ -10,6 +10,7 @@ namespace Ndrx\Profiler;
 
 
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Process
 {
@@ -29,6 +30,10 @@ class Process
      */
     protected $context;
 
+    /**
+     * @var EventDispatcher
+     */
+    protected $dispatcher;
 
     /**
      * @param null $id
@@ -38,6 +43,8 @@ class Process
     {
         $this->id = $id;
         $this->parentId = $parentId;
+
+        $this->dispatcher = new EventDispatcher();
     }
 
     /**
@@ -79,5 +86,13 @@ class Process
     public function getParentId()
     {
         return $this->parentId;
+    }
+
+    /**
+     * @return EventDispatcher
+     */
+    public function getDispatcher()
+    {
+        return $this->dispatcher;
     }
 }

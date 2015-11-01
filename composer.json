@@ -20,7 +20,8 @@
         "php-jsonpatch/php-jsonpatch": "1.2.*",
         "symfony/http-foundation": "^2.7",
         "symfony/finder": "^2.7",
-        "symfony/filesystem": "^2.7"
+        "symfony/filesystem": "^2.7",
+        "symfony/event-dispatcher": "^2.7"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*",

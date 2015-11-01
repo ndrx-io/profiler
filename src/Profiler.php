@@ -11,6 +11,8 @@ use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
+use Ndrx\Profiler\Events\Timeline\End;
+use Ndrx\Profiler\Events\Timeline\Start;
 
 
 /**
@@ -186,5 +188,31 @@ class Profiler
     public function getContext()
     {
         return $this->context;
+    }
+
+    /**
+     * Start item for the timeline
+     *
+     * @param $key
+     * @param $label
+     * @param null $data
+     * @param null $timetamp
+     */
+    public function start($key, $label, $data = null, $timetamp = null)
+    {
+        $event = new Start($key, $label, $data, $timetamp);
+        $this->getContext()->getProcess()->getDispatcher()->dispatch(Start::EVENT_NAME, $event);
+    }
+
+    /**
+     * End item for the timeline
+     *
+     * @param $key
+     * @param null $timetamp
+     */
+    public function stop($key, $timetamp = null)
+    {
+        $event = new End($key, $timetamp);
+        $this->getContext()->getProcess()->getDispatcher()->dispatch(End::EVENT_NAME, $event);
     }
 }
