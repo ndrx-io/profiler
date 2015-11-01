@@ -3,7 +3,14 @@
 namespace Ndrx\Profiler;
 
 
-use Symfony\Component\HttpFoundation\Request;
+use Ndrx\Context\Cli;
+use Ndrx\Context\Contracts\ContextInterface;
+use Ndrx\Context\Http;
+use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
+use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
+use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
+use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
+use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 
 
 /**
@@ -12,50 +19,115 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Profiler
 {
-    /**
-     * @var Process
-     */
-    protected $process;
 
     /**
-     * @var Request
+     * @var ContextInterface
      */
-    protected $request;
+    protected $context;
 
     /**
-     * Profiler constructor.
+     * @var DataSourceInterface
+     */
+    protected $datasource;
+
+    /**
+     * @var Profiler
+     */
+    protected static $instance;
+
+    /**
+     * @var array
+     */
+    protected $collectors;
+
+    /**
+     *
      */
     public function __construct()
     {
-        $this->request = Request::createFromGlobals();
-        $this->loadContext();
-        $this->sendProfilerHeaders();
+        $this->collectors = [
+            'initial' => [],
+            'final' => [],
+            'stream' => []
+        ];
     }
-
 
     /**
-     * Build the process object
-     * Load header and set good session and process parent
+     * @return Profiler
      */
-    public function loadContext()
+    public static function getInstance()
     {
-        $sessionId = $this->request->headers->get('PROFILE-SESSION-ID', null);
-        $processId = $this->request->headers->get('PROFILE-PROCESS-ID', null);
-
-        $session = null;
-        if(is_null($sessionId)) {
-            $session = Session::build();
-        } else {
-            $session = new Session($sessionId);
+        if (!is_null(self::$instance)) {
+            return self::$instance;
         }
 
-        $this->process = Process::build($session, $processId);
+        self::$instance = new self();
+
+        // set the good context
+        switch (php_sapi_name()) {
+            case 'cli':
+
+                self::$instance->context = new Http();
+                break;
+
+            default:
+                self::$instance->context = new Cli();
+        }
+
+        self::$instance->context->initiate();
+
+        return self::$instance;
     }
 
-
-    public function sendProfilerHeaders()
+    /**
+     * Add a data collector to the profiler
+     * @param CollectorInterface $collector
+     * @throws \RuntimeException
+     */
+    public function registerCollector(CollectorInterface $collector)
     {
-        header("PROFILE-SESSION-ID: " . $this->process->getSession()->getId());
-        header("PROFILE-PROCESS-ID: " . $this->process->getId());
+        if ($collector instanceof StartCollectorInterface) {
+            $this->collectors['initial'][$collector->getPath()] = $collector;
+        } elseif ($collector instanceof FinalCollectorInterface) {
+            $this->collectors['final'][$collector->getPath()] = $collector;
+        } elseif ($collector instanceof StreamCollectorInterface) {
+            $this->collectors['stream'][$collector->getPath()] = $collector;
+        } else {
+            throw new \RuntimeException('Collector must be implementation of StartCollectorInterface, '
+                . 'FinalCollectorInterface or StreamCollectorInterface Path=' . $collector->getPath());
+        }
+    }
+
+    /**
+     * Register multiple collector to the profiler
+     * @param array $collectors
+     */
+    public function registerCollectors(array $collectors)
+    {
+        foreach ($collectors as $collector) {
+            $this->registerCollector($collector);
+        }
+    }
+
+    /**
+     * Build and register collector class
+     * @param $className
+     */
+    public function registerCollectorClass($className)
+    {
+        /** @var CollectorInterface $collector */
+        $collector = new $className($this->context->getProcess(), $this->datasource);
+        $this->registerCollector($collector);
+    }
+
+    /**
+     * Build and register collector classes
+     * @param array $collectors
+     */
+    public function registerCollectorClasses(array $collectors)
+    {
+        foreach ($collectors as $collector) {
+            $this->registerCollectorClass($collector);
+        }
     }
 }

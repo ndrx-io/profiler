@@ -8,7 +8,7 @@ namespace Ndrx\Profiler\Collectors\Contracts;
  * Date: 31/10/15
  * Time: 17:33
  */
-interface StartCollectorInterface extends CollectorInterface
+interface FinalCollectorInterface extends CollectorInterface
 {
 
 }

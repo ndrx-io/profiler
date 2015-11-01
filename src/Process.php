@@ -9,6 +9,8 @@
 namespace Ndrx\Profiler;
 
 
+use Ndrx\Context\Contracts\ContextInterface;
+
 class Process
 {
     /**
@@ -25,6 +27,12 @@ class Process
      * @var Session
      */
     protected $session;
+
+    /**
+     * @var ContextInterface
+     */
+    protected $context;
+
 
     /**
      * @param Session $session
@@ -70,5 +78,21 @@ class Process
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return ContextInterface
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param ContextInterface $context
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
     }
 }

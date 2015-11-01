@@ -12,6 +12,8 @@ namespace Ndrx\Profiler\Collectors;
 use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
+use Ndrx\Profiler\JsonPatch;
+use Ndrx\Profiler\Process;
 
 abstract class Collector implements CollectorInterface
 {
@@ -22,12 +24,29 @@ abstract class Collector implements CollectorInterface
     protected $dataSource;
 
     /**
-     * Collector constructor.
-     * @param DataSourceInterface $dataSource
+     * @var Process
      */
-    public function __construct(DataSourceInterface $dataSource)
+    protected $process;
+
+    /**
+     * @var JsonPatch
+     */
+    protected $jsonPatch;
+
+    /**
+     * @param Process $process
+     * @param DataSourceInterface $dataSource
+     * @param JsonPatch|null $jsonPatch
+     */
+    public function __construct(Process $process, DataSourceInterface $dataSource, JsonPatch $jsonPatch = null)
     {
         $this->dataSource = $dataSource;
+        $this->process = $process;
+        $this->jsonPatch = $jsonPatch;
+
+        if(is_null($jsonPatch)) {
+            $this->jsonPatch = new JsonPatch();
+        }
     }
 
     /**
@@ -36,18 +55,13 @@ abstract class Collector implements CollectorInterface
      */
     public function persist()
     {
-        $path = $this->getPath();
-        if ($this instanceof StreamCollectorInterface) {
-            $path .= '/-';
+        if(!is_array($this->data)) {
+            $this->data = [$this->data];
         }
 
-        $this->dataSource->save(
-            [
-                'op' => 'add',
-                'path' => $path,
-                'value' => $this->data
-            ]
-        );
+        foreach($this->data as $element) {
+            $this->dataSource->save($this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, $element, $this instanceof StreamCollectorInterface));
+        }
 
         $this->data = [];
     }
