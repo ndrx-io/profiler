@@ -11,7 +11,7 @@ class JsonPatchTest extends \PHPUnit_Framework_TestCase
     {
         $jsonPatch = new JsonPatch();
         $result = $jsonPatch->generate('aa', JsonPatch::ACTION_ADD, 'bar', false);
-        $this->assertEquals('aa', $result['path']);
+        $this->assertEquals('/aa', $result['path']);
         $this->assertEquals('bar', $result['value']);
         $this->assertEquals(JsonPatch::ACTION_ADD, $result['op']);
     }
@@ -20,7 +20,7 @@ class JsonPatchTest extends \PHPUnit_Framework_TestCase
     {
         $jsonPatch = new JsonPatch();
         $result = $jsonPatch->generate('aa', JsonPatch::ACTION_ADD, 'bar', true);
-        $this->assertEquals('aa/-', $result['path']);
+        $this->assertEquals('/aa/-', $result['path']);
         $this->assertEquals('bar', $result['value']);
         $this->assertEquals(JsonPatch::ACTION_ADD, $result['op']);
     }
@@ -29,7 +29,7 @@ class JsonPatchTest extends \PHPUnit_Framework_TestCase
     {
         $jsonPatch = new JsonPatch();
         $result = $jsonPatch->generate('aa', JsonPatch::ACTION_MOVE, 'bar');
-        $this->assertEquals('aa', $result['path']);
+        $this->assertEquals('/aa', $result['path']);
         $this->assertEquals('bar', $result['value']);
         $this->assertEquals(JsonPatch::ACTION_MOVE, $result['op']);
     }
@@ -38,7 +38,7 @@ class JsonPatchTest extends \PHPUnit_Framework_TestCase
     {
         $jsonPatch = new JsonPatch();
         $result = $jsonPatch->generate('aa', JsonPatch::ACTION_REMOVE);
-        $this->assertEquals('aa', $result['path']);
+        $this->assertEquals('/aa', $result['path']);
         $this->assertEquals(JsonPatch::ACTION_REMOVE, $result['op']);
     }
 
