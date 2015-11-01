@@ -9,10 +9,10 @@
 namespace Ndrx\Profiler;
 
 use Rs\Json\Patch;
+use Rs\Json\Patch\FailedTestException;
+use Rs\Json\Patch\InvalidOperationException;
 use Rs\Json\Patch\InvalidPatchDocumentJsonException;
 use Rs\Json\Patch\InvalidTargetDocumentJsonException;
-use Rs\Json\Patch\InvalidOperationException;
-use Rs\Json\Patch\FailedTestException;
 
 /**
  * Class JsonPatch

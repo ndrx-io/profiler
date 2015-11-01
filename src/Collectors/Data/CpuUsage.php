@@ -11,7 +11,6 @@ namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
-use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\JsonPatch;
 use Ndrx\Profiler\Process;
@@ -54,7 +53,7 @@ class CpuUsage extends Collector implements FinalCollectorInterface
      *              bb: <VALUE OF RESOLVE>
      *       }
      *  }
-     * @return mixed
+     * @return string
      */
     public function getPath()
     {
