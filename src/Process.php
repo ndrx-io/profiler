@@ -36,7 +36,7 @@ class Process
     protected $dispatcher;
 
     /**
-     * @param null $id
+     * @param string $id
      * @param null $parentId
      */
     public function __construct($id = null, $parentId = null)
