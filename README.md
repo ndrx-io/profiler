@@ -3,9 +3,9 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
-[![Build Status][ico-scrutinizer]][link-scrutinizer]
-[![Build Status][ico-coverage]][link-coverage]
-[![SensioLabsInsight](ico-insight)](link-insight)
+[![Quality Status][ico-scrutinizer]][link-scrutinizer]
+[![Coverage Status][ico-coverage]][link-coverage]
+[![SensioLabsInsight][ico-insight]][link-insight]
 
 [![Build Status][ico-ndrx]][link-ndrx]
 
