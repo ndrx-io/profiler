@@ -28,7 +28,16 @@ class Timeline extends Collector implements StreamCollectorInterface
         // create timeline domain
         $patch = $this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, [], false);
         $this->dataSource->save($this->process, [$patch]);
+        $this->registerListeners();
+    }
 
+    /**
+     * @author LAHAXE Arnaud
+     *
+     *
+     */
+    protected function registerListeners()
+    {
         $this->process->getDispatcher()->addListener(Start::EVENT_NAME, function (Start $event) {
             $this->data = [
                 'key' => md5($event->getKey()),

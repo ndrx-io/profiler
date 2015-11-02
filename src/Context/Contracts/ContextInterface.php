@@ -3,6 +3,7 @@
 namespace Ndrx\Profiler\Context\Contracts;
 
 use Ndrx\Profiler\Process;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Created by PhpStorm.
@@ -29,4 +30,9 @@ interface ContextInterface
      * @return Process
      */
     public function getProcess();
+
+    /**
+     * @return Request
+     */
+    public function getRequest();
 }
