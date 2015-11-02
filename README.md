@@ -5,7 +5,7 @@
 [![Build Status][ico-travis]][link-travis]
 [![Build Status][ico-scrutinizer]][link-scrutinizer]
 [![Build Status][ico-coverage]][link-coverage]
-
+[![SensioLabsInsight](ico-insight)](link-insight)
 
 [![Build Status][ico-ndrx]][link-ndrx]
 
@@ -54,6 +54,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-ndrx]: https://pbs.twimg.com/profile_images/585415130881642497/Qg4niE0o.png
 [ico-scrutinizer]: https://scrutinizer-ci.com/g/ndrx-io/profiler/badges/quality-score.png?b=master
 [ico-coverage]: https://scrutinizer-ci.com/g/ndrx-io/profiler/badges/coverage.png?b=master
+[ico-insight]: https://insight.sensiolabs.com/projects/687eff4f-7bfb-4a0f-af5b-4786f7a614cf/mini.png
 
 
 [link-packagist]: https://packagist.org/packages/ndrx-io/profiler
@@ -63,3 +64,4 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-ndrx]: http://ndrx.io
 [link-scrutinizer]: https://scrutinizer-ci.com/g/ndrx-io/profiler/
 [link-coverage]: https://scrutinizer-ci.com/g/ndrx-io/profiler/
+[link-insight]: https://insight.sensiolabs.com/projects/687eff4f-7bfb-4a0f-af5b-4786f7a614cf
