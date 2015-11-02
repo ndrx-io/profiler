@@ -23,29 +23,30 @@ class Request extends Collector implements StartCollectorInterface
     public function resolve()
     {
         $request = $this->process->getContext()->getRequest();
-
-        return [
-            'method'               => $request->getMethod(),
-            'real-method'          => $request->getRealMethod(),
-            'uri'                  => $request->getUri(),
-            'port'                 => $request->getPort(),
-            'ssl'                  => $request->isSecure(),
-            'scheme'               => $request->getScheme(),
+        $hasSession = $request->getSession() !== null;
+        $this->data = [
+            'method' => $request->getMethod(),
+            'real-method' => $request->getRealMethod(),
+            'uri' => $request->getUri(),
+            'scriptName' => $request->getScriptName(),
+            'port' => $request->getPort(),
+            'ssl' => $request->isSecure(),
+            'scheme' => $request->getScheme(),
             'accept-content-types' => $request->getAcceptableContentTypes(),
-            'cookies'              => $request->cookies->all(),
-            'headers'              => $request->headers->all(),
-            'data'                 => [
-                'get'  => $request->query->all(),
+            'cookies' => $request->cookies->all(),
+            'headers' => $request->headers->all(),
+            'data' => [
+                'get' => $request->query->all(),
                 'post' => $request->request->all()
             ],
-            'charsets'             => $request->getCharsets(),
-            'default-local'        => $request->getDefaultLocale(),
-            'local'                => $request->getLocale(),
-            'encodings'            => $request->getEncodings(),
-            'etags'                => $request->getETags(),
-            'session'              => [
-                'id'   => $request->getSession()->getId(),
-                'data' => $request->getSession()->all()
+            'charsets' => $request->getCharsets(),
+            'default-local' => $request->getDefaultLocale(),
+            'local' => $request->getLocale(),
+            'encodings' => $request->getEncodings(),
+            'etags' => $request->getETags(),
+            'session' => [
+                'id' => $hasSession ? $request->getSession()->getId() : null,
+                'data' => $hasSession ? $request->getSession()->all() : []
             ]
         ];
     }

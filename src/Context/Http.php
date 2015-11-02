@@ -21,6 +21,7 @@ class Http extends Context
         $processId = $this->request->headers->get(self::HEADER_PROCESS, null);
 
         $this->process = Process::build($processId);
+        $this->process->setContext($this);
 
         $this->sendDebugIds();
     }

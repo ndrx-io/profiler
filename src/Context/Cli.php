@@ -17,6 +17,7 @@ class Cli extends Context
         parent::initiate();
 
         $this->process = Process::build();
+        $this->process->setContext($this);
     }
 
     public function sendDebugIds()

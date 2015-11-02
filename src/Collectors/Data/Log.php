@@ -11,12 +11,11 @@ namespace Ndrx\Profiler\Collectors\Data;
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
-use Ndrx\Profiler\Events\Timeline\End;
-use Ndrx\Profiler\Events\Timeline\Start;
+use \Ndrx\Profiler\Events\Log as LogEvent;
 use Ndrx\Profiler\JsonPatch;
 use Ndrx\Profiler\Process;
 
-class Timeline extends Collector implements StreamCollectorInterface
+class Log extends Collector implements StreamCollectorInterface
 {
     /**
      * @param Process $process
@@ -27,7 +26,7 @@ class Timeline extends Collector implements StreamCollectorInterface
     {
         parent::__construct($process, $dataSource, $jsonPatch);
 
-        // create timeline domain
+        // create logs domain
         $patch = $this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, [], false);
         $this->dataSource->save($this->process, [$patch]);
         $this->registerListeners();
@@ -40,21 +39,8 @@ class Timeline extends Collector implements StreamCollectorInterface
      */
     protected function registerListeners()
     {
-        $this->process->getDispatcher()->addListener(Start::EVENT_NAME, function (Start $event) {
-            $this->data = [
-                'key' => md5($event->getKey()),
-                'start' => $event->getTimestamp(),
-                'label' => $event->getKey(),
-                'data' => $event->getData()
-            ];
-            $this->stream();
-        });
-
-        $this->process->getDispatcher()->addListener(End::EVENT_NAME, function (End $event) {
-            $this->data = [
-                'key' => md5($event->getKey()),
-                'end' => $event->getTimestamp(),
-            ];
+        $this->process->getDispatcher()->addListener(LogEvent::EVENT_NAME, function (LogEvent $event) {
+            $this->data = $event->toArray();
             $this->stream();
         });
     }
@@ -82,7 +68,7 @@ class Timeline extends Collector implements StreamCollectorInterface
      */
     public function getPath()
     {
-        return 'timeline';
+        return 'logs';
     }
 
     /**
@@ -91,16 +77,9 @@ class Timeline extends Collector implements StreamCollectorInterface
      */
     public function stream()
     {
-        $key = $this->data['key'];
-        unset($this->data['key']);
-        $path = $this->getPath() . '/' . $key;
-        if (!array_key_exists('end', $this->data)) {
-            $patch = $this->jsonPatch->generate($path, JsonPatch::ACTION_ADD, $this->data, false);
-        } else {
-            $patch = $this->jsonPatch->generate($path . '/end', JsonPatch::ACTION_ADD, $this->data['end'], false);
-        }
-
+        $patch = $this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, $this->data, true);
         $this->dataSource->save($this->process, [$patch]);
         $this->data = [];
     }
 }
+
