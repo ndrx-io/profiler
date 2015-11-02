@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Events\Timeline;
 
-
 use Symfony\Component\EventDispatcher\Event;
 
 class End extends Event

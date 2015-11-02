@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Collectors\Data;
 
-
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
@@ -56,7 +55,6 @@ class Timeline extends Collector implements StreamCollectorInterface
      */
     public function resolve()
     {
-
     }
 
     /**
@@ -89,7 +87,6 @@ class Timeline extends Collector implements StreamCollectorInterface
             $patch = $this->jsonPatch->generate($path, JsonPatch::ACTION_ADD, $this->data, false);
         } else {
             $patch = $this->jsonPatch->generate($path . '/end', JsonPatch::ACTION_ADD, $this->data['end'], false);
-
         }
 
         $this->dataSource->save($this->process, [$patch]);

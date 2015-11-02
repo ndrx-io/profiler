@@ -12,7 +12,6 @@ use Ndrx\Profiler\Process;
  */
 class Cli extends Context
 {
-
     public function initiate()
     {
         parent::initiate();
@@ -22,6 +21,5 @@ class Cli extends Context
 
     public function sendDebugIds()
     {
-
     }
 }

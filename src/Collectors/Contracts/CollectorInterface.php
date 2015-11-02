@@ -10,7 +10,6 @@ namespace Ndrx\Profiler\Collectors\Contracts;
  */
 interface CollectorInterface
 {
-
     /**
      * Fetch data
      * @return mixed

@@ -10,5 +10,4 @@ namespace Ndrx\Profiler\Collectors\Contracts;
  */
 interface FinalCollectorInterface extends CollectorInterface
 {
-
 }

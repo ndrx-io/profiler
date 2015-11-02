@@ -4,7 +4,6 @@ namespace Ndrx\Profiler\DataSources\Contracts;
 
 use Ndrx\Profiler\Process;
 
-
 /**
  * Created by PhpStorm.
  * User: arnaud
@@ -13,7 +12,6 @@ use Ndrx\Profiler\Process;
  */
 interface DataSourceInterface
 {
-
     public function getProcess($processId);
 
     public function clear();

@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Context;
 
-
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
 use Ndrx\Profiler\Process;
 use Symfony\Component\HttpFoundation\Request;

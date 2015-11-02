@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler;
 
-
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 

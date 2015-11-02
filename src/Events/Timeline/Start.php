@@ -8,12 +8,10 @@
 
 namespace Ndrx\Profiler\Events\Timeline;
 
-
 use Symfony\Component\EventDispatcher\Event;
 
 class Start extends Event
 {
-
     const EVENT_NAME = 'profiler.timeline_start';
 
     /**

@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Collectors\Data;
 
-
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
@@ -17,7 +16,6 @@ use Ndrx\Profiler\Process;
 
 class CpuUsage extends Collector implements FinalCollectorInterface
 {
-
     protected $initialCpuUsage;
     /**
      * EventsDataSource constructor.
@@ -37,7 +35,6 @@ class CpuUsage extends Collector implements FinalCollectorInterface
      */
     public function resolve()
     {
-
         $cpu = getrusage();
 
         $this->data = ($cpu["ru_utime.tv_sec"] * 1e6 + $cpu["ru_utime.tv_usec"]) - $this->initialCpuUsage;

@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\DataSources;
 
-
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Process;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -18,7 +17,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class File implements DataSourceInterface
 {
-
     /**
      * @var string
      */
@@ -53,7 +51,7 @@ class File implements DataSourceInterface
             ->in($this->getProcessFolder($processId));
 
         /** @var SplFileInfo $file */
-        foreach($iterator as $file) {
+        foreach ($iterator as $file) {
             yield file_get_contents($file->getPath() . DIRECTORY_SEPARATOR . $file->getFilename());
         }
     }

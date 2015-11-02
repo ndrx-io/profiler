@@ -2,7 +2,6 @@
 
 namespace Ndrx\Profiler;
 
-
 use Ndrx\Profiler\Context\Cli;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
 use Ndrx\Profiler\Context\Http;
@@ -14,14 +13,12 @@ use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Events\Timeline\End;
 use Ndrx\Profiler\Events\Timeline\Start;
 
-
 /**
  * Class Profiler
  * @package Ndrx\Profiler
  */
 class Profiler
 {
-
     /**
      * @var ContextInterface
      */
@@ -178,7 +175,6 @@ class Profiler
      */
     public function getProfile($id)
     {
-
         return (new JsonPatch())->compile($this->datasource->getProcess($id));
     }
 

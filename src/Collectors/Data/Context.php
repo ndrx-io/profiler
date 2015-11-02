@@ -8,20 +8,17 @@
 
 namespace Ndrx\Profiler\Collectors\Data;
 
-
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 
 class Context extends Collector implements StartCollectorInterface
 {
-
     /**
      * Fetch data
      * @return mixed
      */
     public function resolve()
     {
-
         $this->data = [
             'environment' => php_sapi_name(),
             'process-id' => $this->process->getId(),

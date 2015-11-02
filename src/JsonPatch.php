@@ -20,7 +20,6 @@ use Rs\Json\Patch\InvalidTargetDocumentJsonException;
  */
 class JsonPatch
 {
-
     /**
      * Action are based on http://jsonpatch.com/ description
      *
@@ -59,7 +58,7 @@ class JsonPatch
         $patches = [];
         $rootParentCreated = false;
         foreach ($items as $key => $element) {
-            if(!$rootParentCreated) {
+            if (!$rootParentCreated) {
                 $patches[] = $this->generate($path, JsonPatch::ACTION_ADD, [], false);
                 $rootParentCreated = true;
             }
@@ -86,7 +85,6 @@ class JsonPatch
 
         foreach ($patchs as $patch) {
             try {
-
                 $patch = new Patch($targetDocument, $patch);
                 $targetDocument = $patch->apply();
             } catch (InvalidPatchDocumentJsonException $e) {

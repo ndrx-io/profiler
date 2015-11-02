@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Collectors;
 
-
 use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
@@ -17,7 +16,6 @@ use Ndrx\Profiler\Process;
 
 abstract class Collector implements CollectorInterface
 {
-
     /**
      * @var mixed
      */
