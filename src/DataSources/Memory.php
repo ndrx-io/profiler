@@ -79,10 +79,7 @@ class Memory implements DataSourceInterface
      */
     public function save(Process $process, array $item)
     {
-        if (!array_key_exists($process->getId(), $this->memory)) {
-            $this->memory[$process->getId()] = [];
-        }
-
+        $this->initiateMemoryProcess($process);
         $this->memory[$process->getId()][] = $item;
     }
 
@@ -93,10 +90,14 @@ class Memory implements DataSourceInterface
      */
     public function saveSummary(Process $process, array $item)
     {
+        $this->initiateMemoryProcess($process);
+        $this->memory[$process->getId()][self::SUMMARY_KEY] = $item;
+    }
+
+    protected function initiateMemoryProcess(Process $process)
+    {
         if (!array_key_exists($process->getId(), $this->memory)) {
             $this->memory[$process->getId()] = [];
         }
-
-        $this->memory[$process->getId()][self::SUMMARY_KEY] = $item;
     }
 }
