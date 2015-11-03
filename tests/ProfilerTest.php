@@ -106,6 +106,39 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $this->profiler->registerCollectorClass(UnValidCollector::class);
 
     }
+
+    public function testInitiate()
+    {
+        $this->profiler->registerCollectorClasses([
+            PhpVersion::class,
+            Timeline::class,
+            Duration::class
+        ]);
+        $this->profiler->initiate();
+
+        $process = $this->profiler->getContext()->getProcess();
+        $this->assertInstanceOf(\Generator::class, $this->profiler->getDatasource()->getProcess($process->getId()));
+
+        $profile = $this->profiler->getProfile($process->getId());
+        $this->assertInstanceOf(\stdClass::class, $profile);
+        $this->assertObjectHasAttribute('timeline', $profile);
+        $this->assertObjectHasAttribute('php-version', $profile);
+    }
+
+    public function testTerminate()
+    {
+        $this->profiler->registerCollectorClasses([
+            Duration::class
+        ]);
+        $this->profiler->initiate();
+        $this->profiler->terminate();
+
+        $process = $this->profiler->getContext()->getProcess();
+        $this->assertInstanceOf(\Generator::class, $this->profiler->getDatasource()->getProcess($process->getId()));
+
+        $profile = $this->profiler->getProfile($process->getId());
+        $this->assertObjectHasAttribute('duration', $profile);
+    }
 }
 
 class UnValidCollector extends Collector
