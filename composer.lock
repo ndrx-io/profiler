@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cda4d9ee2d685f3744a4ff7417bbc6fd",
+    "hash": "d8a06cca2c0e92d6f1ac1442811349e4",
     "packages": [
         {
             "name": "php-jsonpatch/php-jsonpatch",
@@ -484,58 +484,6 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
-        },
-        {
-            "name": "epwt/psr-cache",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/gcds/epwt-psr-cache.git",
-                "reference": "07021df6c25a21707a1c58cfa19cfba30d7b82d3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/gcds/epwt-psr-cache/zipball/07021df6c25a21707a1c58cfa19cfba30d7b82d3",
-                "reference": "07021df6c25a21707a1c58cfa19cfba30d7b82d3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "replace": {
-                "psr/cache": "1.0.0"
-            },
-            "type": "interfaces",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Cache\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Aurimas Niekis",
-                    "email": "aurimas.niekis@gmail.com"
-                }
-            ],
-            "description": "PSR-6 Cache Interfaces will be replaced by psr/cache",
-            "homepage": "http://github.com/gcds",
-            "keywords": [
-                "cache",
-                "epwt",
-                "psr",
-                "psr-6",
-                "psr-cache"
-            ],
-            "time": "2015-04-27 20:10:22"
         },
         {
             "name": "guzzle/guzzle",
@@ -1928,7 +1876,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=5.5.0"
     },
     "platform-dev": []
 }
