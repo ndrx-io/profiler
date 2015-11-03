@@ -35,4 +35,5 @@ interface ContextInterface
      * @return Request
      */
     public function getRequest();
+
 }

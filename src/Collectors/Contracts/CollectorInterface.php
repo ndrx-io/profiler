@@ -12,7 +12,7 @@ interface CollectorInterface
 {
     /**
      * Fetch data
-     * @return mixed
+     * @return void
      */
     public function resolve();
 
@@ -35,4 +35,10 @@ interface CollectorInterface
      * @return mixed
      */
     public function getPath();
+
+
+    /**
+     * @return array
+     */
+    public function getData();
 }

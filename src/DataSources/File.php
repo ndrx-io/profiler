@@ -15,8 +15,14 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
+/**
+ * Class File
+ * @package Ndrx\Profiler\DataSources
+ */
 class File implements DataSourceInterface
 {
+    const SUMMARY_FILENAME = 'summary.json';
+
     /**
      * @var string
      */
@@ -47,6 +53,7 @@ class File implements DataSourceInterface
         $finder = new Finder();
         $iterator = $finder
             ->name('*.json')
+            ->notContains('summary.json')
             ->sortByName()
             ->in($this->getProcessFolder($processId));
 
@@ -58,6 +65,7 @@ class File implements DataSourceInterface
 
     /**
      * @throws IOException
+     * @throws \InvalidArgumentException
      */
     public function clear()
     {
@@ -79,25 +87,108 @@ class File implements DataSourceInterface
      * @param Process $process
      * @param array $item
      * @throws IOException
+     * @return bool
      */
     public function save(Process $process, array $item)
     {
-        $processFolder = $this->getProcessFolder($process->getId());
+        $fileName = $this->getProcessFolder($process->getId())
+            . DIRECTORY_SEPARATOR . microtime(true)
+            . '-' . rand() . '.json';
 
-        if (!is_dir($processFolder)) {
-            $this->filesystem->mkdir($processFolder, 0777);
-        }
-        $fileName = $processFolder . DIRECTORY_SEPARATOR . microtime(true) . '-' . rand() . '.json';
-
-        file_put_contents($fileName, json_encode($item));
+        return file_put_contents($fileName, json_encode($item)) !== false;
     }
 
     /**
      * @param $processId
      * @return string
+     * @throws IOException
      */
     protected function getProcessFolder($processId)
     {
-        return $this->folder . DIRECTORY_SEPARATOR . $processId;
+        $processFolder = $this->folder . DIRECTORY_SEPARATOR . $processId;
+
+        if (!is_dir($processFolder)) {
+            $this->filesystem->mkdir($processFolder, 0777);
+        }
+
+        return $processFolder;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @throws IOException
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @return array
+     */
+    public function all($offset = 0, $limit = 15)
+    {
+        $finder = new Finder();
+        $iterator = $finder
+            ->directories()
+            ->depth(0)
+            ->sortByModifiedTime()
+            ->in($this->folder)->getIterator();
+
+
+        $process = [];
+        $index = 0;
+        while ($index < $offset) {
+            $current = $iterator->current();
+
+            if ($current === null) {
+                return [];
+            }
+            $index++;
+            $iterator->next();
+        }
+
+        while ($index < ($offset + $limit)) {
+            /** @var SplFileInfo $current */
+            $current = $iterator->current();
+
+            if ($current === null) {
+                break;
+            }
+
+            $summaryFile = $current->getPath() . $current->getFilename() . DIRECTORY_SEPARATOR . self::SUMMARY_FILENAME;
+            if ($this->filesystem->exists($summaryFile)) {
+                $process[] = json_decode(file_get_contents($summaryFile));
+                $index++;
+            }
+            $iterator->next();
+        }
+
+        return $process;
+    }
+
+    /**
+     * @return int
+     * @throws IOException
+     * @throws \InvalidArgumentException
+     */
+    public function count()
+    {
+        $finder = new Finder();
+
+        return $finder
+            ->directories()
+            ->depth(0)
+            ->in($this->folder)->count();
+    }
+
+    /**
+     * @param Process $process
+     * @param array $item
+     * @return mixed
+     * @throws IOException
+     */
+    public function saveSummary(Process $process, array $item)
+    {
+        $fileName = $this->getProcessFolder($process->getId())
+            . DIRECTORY_SEPARATOR . self::SUMMARY_FILENAME;
+
+        return file_put_contents($fileName, json_encode($item)) !== false;
     }
 }

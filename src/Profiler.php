@@ -2,6 +2,7 @@
 
 namespace Ndrx\Profiler;
 
+use Ndrx\Profiler\Collectors\Data\Request;
 use Ndrx\Profiler\Context\Cli;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
 use Ndrx\Profiler\Context\Http;
@@ -128,6 +129,7 @@ class Profiler
     /**
      * Build and register collector classes
      * @param array $collectors
+     * @throws \RuntimeException
      */
     public function registerCollectorClasses(array $collectors)
     {
@@ -157,6 +159,16 @@ class Profiler
         /** @var CollectorInterface $collector */
         foreach ($this->collectors[$name] as $collector) {
             $collector->resolve();
+            if ($collector instanceof Request) {
+                $data = $collector->getData();
+
+                $this->datasource->saveSummary($this->context->getProcess(), [
+                    'id' => $this->context->getProcess()->getId(),
+                    'method' => $data['method'],
+                    'uri' => $data['uri'],
+                    'time' => time()
+                ]);
+            }
             $collector->persist();
         }
     }
@@ -167,6 +179,14 @@ class Profiler
     public function setDataSource($datasource)
     {
         $this->datasource = $datasource;
+    }
+
+    /**
+     * @return DataSourceInterface
+     */
+    public function getDatasource()
+    {
+        return $this->datasource;
     }
 
     /**
@@ -210,5 +230,21 @@ class Profiler
     {
         $event = new End($key, $timetamp);
         $this->getContext()->getProcess()->getDispatcher()->dispatch(End::EVENT_NAME, $event);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCollectors()
+    {
+        return $this->collectors;
+    }
+
+    /**
+     * @param array $collectors
+     */
+    public function setCollectors($collectors)
+    {
+        $this->collectors = $collectors;
     }
 }
