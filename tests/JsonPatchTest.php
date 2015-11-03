@@ -1,6 +1,6 @@
 <?php
 
-namespace Ndrx\Skeleton\Test;
+namespace Ndrx\Profiler\Test;
 
 use Ndrx\Profiler\JsonPatch;
 
