@@ -261,12 +261,4 @@ class Profiler
     {
         return $this->collectors;
     }
-
-    /**
-     * @param array $collectors
-     */
-    public function setCollectors($collectors)
-    {
-        $this->collectors = $collectors;
-    }
 }

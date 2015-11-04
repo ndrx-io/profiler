@@ -10,4 +10,9 @@ namespace Ndrx\Profiler\Collectors\Contracts;
  */
 interface FinalCollectorInterface extends CollectorInterface
 {
+    /**
+     * Fetch data
+     * @return void
+     */
+    public function resolve();
 }

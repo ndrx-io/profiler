@@ -74,28 +74,4 @@ abstract class Collector implements CollectorInterface
     {
         return $this->data;
     }
-
-    /**
-     * @param mixed $data
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
-    }
-
-    /**
-     * @return DataSourceInterface
-     */
-    public function getDataSource()
-    {
-        return $this->dataSource;
-    }
-
-    /**
-     * @param DataSourceInterface $dataSource
-     */
-    public function setDataSource($dataSource)
-    {
-        $this->dataSource = $dataSource;
-    }
 }

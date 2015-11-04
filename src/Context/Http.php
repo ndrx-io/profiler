@@ -26,6 +26,8 @@ class Http extends Context
 
     public function sendDebugIds()
     {
-        header(self::HEADER_PROCESS . ": " . $this->process->getId());
+        if (!headers_sent()) {
+            header(self::HEADER_PROCESS . ": " . $this->process->getId());
+        }
     }
 }

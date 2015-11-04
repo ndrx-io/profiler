@@ -29,6 +29,7 @@ class ProfilerHttpTest extends \PHPUnit_Framework_TestCase
         $this->profiler = Profiler::getInstance();
         $this->assertInstanceOf(ContextInterface::class, $this->profiler->getContext());
         $this->assertInstanceOf(Http::class, $this->profiler->getContext());
+        $this->profiler->getContext()->sendDebugIds();
     }
 
 }

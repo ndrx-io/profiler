@@ -22,12 +22,24 @@ class CpuUsage extends Collector implements FinalCollectorInterface
      */
     public function __construct(Process $process, DataSourceInterface $dataSource, JsonPatch $jsonPatch = null)
     {
-        $cpu = getrusage();
-        $this->initialCpuUsage = $cpu["ru_utime.tv_sec"] * 1e6 + $cpu["ru_utime.tv_usec"];
+        $this->initialCpuUsage = $this->getUsage();
 
         parent::__construct($process, $dataSource, $jsonPatch);
     }
 
+    protected function getUsage()
+    {
+        /*
+         * getrusage is not available on windows with php < 7
+         */
+        if(!function_exists('getrusage')) {
+            return 0;
+        }
+
+        $cpu =  getrusage();
+
+        return $cpu["ru_utime.tv_sec"] * 1e6 + $cpu["ru_utime.tv_usec"];
+    }
 
     /**
      * Fetch data
@@ -35,9 +47,7 @@ class CpuUsage extends Collector implements FinalCollectorInterface
      */
     public function resolve()
     {
-        $cpu = getrusage();
-
-        $this->data = ($cpu["ru_utime.tv_sec"] * 1e6 + $cpu["ru_utime.tv_usec"]) - $this->initialCpuUsage;
+        $this->data =  $this->getUsage() - $this->initialCpuUsage;
     }
 
     /**

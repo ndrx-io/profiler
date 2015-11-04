@@ -45,15 +45,6 @@ class Log extends Collector implements StreamCollectorInterface
         });
     }
 
-
-    /**
-     * Fetch data
-     * @return mixed
-     */
-    public function resolve()
-    {
-    }
-
     /**
      * The path in the final json
      * @example

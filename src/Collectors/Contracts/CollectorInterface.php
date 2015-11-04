@@ -11,12 +11,6 @@ namespace Ndrx\Profiler\Collectors\Contracts;
 interface CollectorInterface
 {
     /**
-     * Fetch data
-     * @return void
-     */
-    public function resolve();
-
-    /**
      * Convert data into jsonpatch query and save it in the datasource
      * @return mixed
      */
