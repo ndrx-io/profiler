@@ -126,7 +126,7 @@ class Profiler implements LoggerAwareInterface
 
         $dispatcher = self::$instance->context->getProcess()->getDispatcher();
         self::$instance->timeline = new Timeline($dispatcher);
-        self::$instance->logger = new Simple($dispatcher);
+
         return self::$instance;
     }
 

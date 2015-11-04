@@ -9,8 +9,11 @@
 
 namespace Collectors\Data;
 
+use Monolog\Logger;
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Data\Log;
+use Ndrx\Profiler\Components\Logs\Monolog;
+use Ndrx\Profiler\Components\Logs\Simple;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\Events\Log as LogEvent;
@@ -45,18 +48,36 @@ class LogTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->datasource = new Memory();
-        $this->profiler   = Profiler::getInstance();
+        $this->profiler = Profiler::getInstance();
         $this->profiler->setDataSource($this->datasource);
-        $this->process   = $this->profiler->getContext()->getProcess();
+        $this->process = $this->profiler->getContext()->getProcess();
         $this->collector = new Log($this->process, $this->profiler->getDatasource());
-
         $this->profiler->registerCollector($this->collector);
 
     }
 
     public function testResolve()
     {
+        $logger = new Simple();
+        $logger->setDispatcher($this->process->getDispatcher());
+        $this->profiler->setLogger($logger);
         $this->profiler->alert('FooBar');
+        $this->assertInstanceOf(\Generator::class, $this->datasource->getProcess($this->process->getId()));
+    }
+
+    public function testResolveMonolog()
+    {
+        $monolog = new Monolog();
+
+        $log = new Logger('name');
+        $log->pushHandler($monolog);
+        $monolog->setDispatcher($this->process->getDispatcher());
+        $this->profiler->setLogger($monolog);
+
+        $log->addError('Bar');
+
+        $this->profiler->alert('FooBar');
+
         $this->assertInstanceOf(\Generator::class, $this->datasource->getProcess($this->process->getId()));
     }
 }
