@@ -79,8 +79,7 @@ class File implements DataSourceInterface
      */
     public function deleteProcess($processId)
     {
-        $finder = new Finder();
-        $this->filesystem->remove($finder->in($this->getProcessFolder($processId)));
+        $this->filesystem->remove($this->getProcessFolder($processId));
     }
 
     /**
@@ -172,10 +171,11 @@ class File implements DataSourceInterface
     {
         $finder = new Finder();
 
-        return $finder
+        return  $finder
             ->directories()
             ->depth(0)
-            ->in($this->folder)->count();
+            ->in($this->folder)
+            ->count();
     }
 
     /**

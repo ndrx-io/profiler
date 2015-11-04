@@ -24,7 +24,7 @@ interface DataSourceInterface
 
     /**
      * @param $processId
-     * @return mixed
+     * @return \Generator
      */
     public function getProcess($processId);
 

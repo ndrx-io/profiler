@@ -74,27 +74,29 @@ class JsonPatch
         return $patches;
     }
 
-
     /**
-     * @param $patchs
+     * @author LAHAXE Arnaud
+     *
+     * @param        $patchs
+     * @param string $targetDocument
+     *
      * @return mixed
      */
-    public function compile($patchs)
+    public function compile($patchs, $targetDocument = '{}')
     {
-        $targetDocument = '{}';
 
         foreach ($patchs as $patch) {
             try {
                 $patch = new Patch($targetDocument, $patch);
                 $targetDocument = $patch->apply();
             } catch (InvalidPatchDocumentJsonException $e) {
-                echo $e->getMessage();
+
             } catch (InvalidTargetDocumentJsonException $e) {
-                echo $e->getMessage();
+
             } catch (InvalidOperationException $e) {
-                echo $e->getMessage();
+
             } catch (FailedTestException $e) {
-                echo $e->getMessage();
+
             }
         }
 

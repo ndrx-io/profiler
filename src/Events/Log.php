@@ -30,7 +30,7 @@ class Log extends Event
      * @param $context
      * @param $stack
      */
-    public function __construct($level, $message, $context, $stack)
+    public function __construct($level, $message, $context, $stack = [])
     {
         $this->level = $level;
         $this->message = $message;

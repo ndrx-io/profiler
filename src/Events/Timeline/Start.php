@@ -81,4 +81,12 @@ class Start extends Event
     {
         return $this->timestamp;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return get_object_vars($this);
+    }
 }

@@ -7,6 +7,7 @@ use Ndrx\Profiler\Collectors\Data\Duration;
 use Ndrx\Profiler\Collectors\Data\PhpVersion;
 use Ndrx\Profiler\Collectors\Data\Request;
 use Ndrx\Profiler\Collectors\Data\Timeline;
+use Ndrx\Profiler\Context\Cli;
 use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\Profiler;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
@@ -28,18 +29,17 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
+        Profiler::$environment = 'cli';
+        Profiler::destroy();
         $this->profiler = Profiler::getInstance();
-        $this->profiler->setCollectors([
-            'initial' => [],
-            'final' => [],
-            'stream' => []
-        ]);
+
         $this->profiler->setDataSource(new Memory());
     }
 
     public function testContext()
     {
         $this->assertInstanceOf(ContextInterface::class, $this->profiler->getContext());
+        $this->assertInstanceOf(Cli::class, $this->profiler->getContext());
     }
 
     public function testAddCollectorClass()
@@ -112,7 +112,8 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $this->profiler->registerCollectorClasses([
             PhpVersion::class,
             Timeline::class,
-            Duration::class
+            Duration::class,
+            Request::class
         ]);
         $this->profiler->initiate();
 

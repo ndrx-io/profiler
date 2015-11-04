@@ -41,6 +41,11 @@ class Profiler
     protected $collectors;
 
     /**
+     * @var string
+     */
+    public static $environment;
+
+    /**
      *
      */
     protected function __construct()
@@ -57,6 +62,15 @@ class Profiler
         $this->terminate();
     }
 
+    public static function detectEnv()
+    {
+        if(self::$environment !== null) {
+            return self::$environment;
+        }
+
+        return php_sapi_name();
+    }
+
     /**
      * @return Profiler
      */
@@ -68,7 +82,7 @@ class Profiler
 
         self::$instance = new self();
         // set the good context
-        switch (php_sapi_name()) {
+        switch (self::detectEnv()) {
             case 'cli':
 
                 self::$instance->context = new Cli();
@@ -81,6 +95,14 @@ class Profiler
         self::$instance->context->initiate();
 
         return self::$instance;
+    }
+
+    /**
+     * @author LAHAXE Arnaud
+     */
+    public static function destroy()
+    {
+        self::$instance = null;
     }
 
     /**

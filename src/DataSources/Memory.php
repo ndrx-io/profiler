@@ -18,6 +18,7 @@ use Ndrx\Profiler\Process;
  */
 class Memory implements DataSourceInterface
 {
+
     const SUMMARY_KEY = 'summary';
 
     protected $memory = [];
@@ -25,11 +26,18 @@ class Memory implements DataSourceInterface
     /**
      * @param int $offset
      * @param int $limit
+     *
      * @return mixed
      */
     public function all($offset = 0, $limit = 15)
     {
-        return array_slice($this->memory, $offset, $limit);
+        $results = array_slice($this->memory, $offset, $limit);
+
+        foreach ($results as $key => $value) {
+            $results[$key] = json_decode($value[self::SUMMARY_KEY]);
+        }
+
+        return $results;
     }
 
     /**
@@ -42,13 +50,14 @@ class Memory implements DataSourceInterface
 
     /**
      * @param $processId
-     * @return mixed
+     *
+     * @return \Generator
      */
     public function getProcess($processId)
     {
         $patchs = $this->memory[$processId];
         unset($patchs[self::SUMMARY_KEY]);
-        foreach($patchs as $patch) {
+        foreach ($patchs as $patch) {
             yield json_encode($patch);
         }
     }
@@ -63,6 +72,7 @@ class Memory implements DataSourceInterface
 
     /**
      * @param $processId
+     *
      * @return mixed
      */
     public function deleteProcess($processId)
@@ -74,7 +84,8 @@ class Memory implements DataSourceInterface
 
     /**
      * @param Process $process
-     * @param array $item
+     * @param array   $item
+     *
      * @return mixed
      */
     public function save(Process $process, array $item)
@@ -85,13 +96,14 @@ class Memory implements DataSourceInterface
 
     /**
      * @param Process $process
-     * @param array $item
+     * @param array   $item
+     *
      * @return mixed
      */
     public function saveSummary(Process $process, array $item)
     {
         $this->initiateMemoryProcess($process);
-        $this->memory[$process->getId()][self::SUMMARY_KEY] = $item;
+        $this->memory[$process->getId()][self::SUMMARY_KEY] = json_encode($item);
     }
 
     protected function initiateMemoryProcess(Process $process)
