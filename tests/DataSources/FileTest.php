@@ -100,7 +100,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->datasource->count());
         $profile = $this->datasource->getProcess($process->getId());
         $this->assertInstanceOf(\Generator::class, $profile);
-        $profile = json_decode($profile->current());
+        $profile = json_decode(current(iterator_to_array($profile)));
         $this->assertInstanceOf(\stdClass::class, $profile);
         $this->assertObjectHasAttribute('foo', $profile);
         $this->assertEquals('bar', $profile->foo);

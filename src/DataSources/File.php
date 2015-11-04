@@ -128,35 +128,23 @@ class File implements DataSourceInterface
             ->directories()
             ->depth(0)
             ->sortByModifiedTime()
-            ->in($this->folder)->getIterator();
+            ->in($this->folder)
+            ->getIterator();
 
+
+        $processFiles = array_slice(iterator_to_array($iterator), $offset, $limit);
 
         $process = [];
-        $index = 0;
-        while ($index < $offset) {
-            $current = $iterator->current();
+        /** @var SplFileInfo $current */
+        foreach ($processFiles as $current) {
 
-            if ($current === null) {
-                return [];
-            }
-            $index++;
-            $iterator->next();
-        }
+            $summaryFile = $current->getPath() . DIRECTORY_SEPARATOR
+                . $current->getFilename() . DIRECTORY_SEPARATOR
+                . self::SUMMARY_FILENAME;
 
-        while ($index < ($offset + $limit)) {
-            /** @var SplFileInfo $current */
-            $current = $iterator->current();
-
-            if ($current === null) {
-                break;
-            }
-
-            $summaryFile = $current->getPath() . $current->getFilename() . DIRECTORY_SEPARATOR . self::SUMMARY_FILENAME;
             if ($this->filesystem->exists($summaryFile)) {
                 $process[] = json_decode(file_get_contents($summaryFile));
-                $index++;
             }
-            $iterator->next();
         }
 
         return $process;
