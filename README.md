@@ -19,7 +19,70 @@ $ composer require ndrx-io/profiler
 
 ## Usage
 
-**Comming soon**
+### Initialize a profiler
+
+``` php
+// build a new profiler
+$profiler = \Ndrx\Profiler\Profiler::getInstance();
+
+// add a datasource
+$profiler->setDataSource(new \Ndrx\Profiler\DataSources\File('/tmp/profiler'));
+
+// create a logger Simple or Monolog
+$logger = new \Ndrx\Profiler\Components\Logs\Simple();
+// set the dispatcher on the logger
+$logger->setDispatcher($profiler->getContext()->getProcess()->getDispatcher());
+$profiler->setLogger($logger);
+
+// register some data collector
+$profiler->registerCollectorClasses([
+    Ndrx\Profiler\Collectors\Data\PhpVersion::class,
+    Ndrx\Profiler\Collectors\Data\CpuUsage::class,
+    Ndrx\Profiler\Collectors\Data\Context::class,
+    Ndrx\Profiler\Collectors\Data\Timeline::class,
+    Ndrx\Profiler\Collectors\Data\Request::class,
+    Ndrx\Profiler\Collectors\Data\Log::class,
+    Ndrx\Profiler\Collectors\Data\Duration::class,
+]);
+
+// initialize the profiler
+$profiler->initiate();
+```
+
+### Add event to the timeline
+
+``` php
+$profiler->start('foo', 'Bar');
+$profiler->stop('foo');
+$this->profiler->monitor('Foobar', function() {
+   // very long process
+});
+```
+
+### Logger
+
+``` php
+$profiler->debug('No beer');
+$profiler->info('No beer');
+$profiler->notice('No beer');
+$profiler->alert('No beer');
+$profiler->error('No beer');
+$profiler->emergency('No beer');
+$profiler->critical('No beer');
+```
+
+### Get last profils
+
+``` php
+$profiles = $profiler->getDatasource()->all(0, 10);
+```
+
+### Get Profil details
+
+``` php
+$id = '1576efef8ea36c74b533238affc3eaec7f94561d';
+$profile = $profiler->getProfile($id);
+```
 
 ## Change log
 
