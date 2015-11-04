@@ -56,6 +56,9 @@ class TimelineTest extends \PHPUnit_Framework_TestCase
     {
         $this->profiler->start('foo', 'barbar');
         $this->profiler->stop('foo');
+        $this->profiler->monitor('Foobar', function() {
+            // yeah
+        });
 
         $this->assertInstanceOf(\Generator::class, $this->datasource->getProcess($this->process->getId()));
     }

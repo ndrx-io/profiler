@@ -56,8 +56,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
 
     public function testResolve()
     {
-        $this->process->getDispatcher()->dispatch(\Ndrx\Profiler\Events\Log::EVENT_NAME, new LogEvent(LOG_EMERG, 'No more beer', []));
-
+        $this->profiler->alert('FooBar');
         $this->assertInstanceOf(\Generator::class, $this->datasource->getProcess($this->process->getId()));
     }
 }
