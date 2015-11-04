@@ -23,6 +23,8 @@ class Log extends Event
 
     protected $stack;
 
+    protected $timestamp;
+
     /**
      * Log constructor.
      * @param $level
@@ -36,6 +38,7 @@ class Log extends Event
         $this->message = $message;
         $this->context = $context;
         $this->stack = $stack;
+        $this->timestamp = time();
     }
 
     /**
