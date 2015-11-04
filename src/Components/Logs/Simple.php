@@ -6,18 +6,28 @@
  * Time: 20:13
  */
 
-namespace Ndrx\Profiler\Logs;
+namespace Ndrx\Profiler\Components\Logs;
 
 
 use Ndrx\Profiler\Events\DispatcherAwareInterface;
 use Ndrx\Profiler\Events\DispatcherAwareTrait;
 use Ndrx\Profiler\Events\Log;
 use Psr\Log\AbstractLogger;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class Simple extends AbstractLogger implements DispatcherAwareInterface
+class Simple extends AbstractLogger implements DispatcherAwareInterface, LoggerInterface
 {
 
     use DispatcherAwareTrait;
+
+    /**
+     * @param EventDispatcher $eventDispatcher
+     */
+    public function __construct(EventDispatcher $eventDispatcher)
+    {
+        $this->dispatcher = $eventDispatcher;
+    }
 
     /**
      * Logs with an arbitrary level.

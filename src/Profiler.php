@@ -2,6 +2,8 @@
 
 namespace Ndrx\Profiler;
 
+use Ndrx\Profiler\Components\Logs\Simple;
+use Ndrx\Profiler\Components\Timeline;
 use Ndrx\Profiler\Collectors\Data\Request;
 use Ndrx\Profiler\Context\Cli;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
@@ -11,13 +13,29 @@ use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
-use Ndrx\Profiler\Events\Timeline\End;
-use Ndrx\Profiler\Events\Timeline\Start;
+use Ndrx\Profiler\Events\DispatcherAwareInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Profiler
+ *
+ *
+ * @method void start($key, $label, $data = null, $timetamp = null) Start a timeline event
+ * @method void stop($key, $timetamp = null) Stop a timeline event
+ * @method mixed monitor($label, \Closure $closure) Monitor a function
+ *
+ * @method null emergency($message, array $context = array())
+ * @method null alert($message, array $context = array())
+ * @method null critical($message, array $context = array())
+ * @method null error($message, array $context = array())
+ * @method null warning($message, array $context = array())
+ * @method null notice($message, array $context = array())
+ * @method null info($message, array $context = array())
+ * @method null debug($message, array $context = array())
+ * @method null log($level, $message, array $context = array())
+ *
  * @package Ndrx\Profiler
  */
 class Profiler implements LoggerAwareInterface
@@ -33,6 +51,11 @@ class Profiler implements LoggerAwareInterface
      * @var DataSourceInterface
      */
     protected $datasource;
+
+    /**
+     * @var Timeline
+     */
+    protected $timeline;
 
     /**
      * @var Profiler
@@ -66,9 +89,12 @@ class Profiler implements LoggerAwareInterface
         $this->terminate();
     }
 
+    /**
+     * @return string
+     */
     public static function detectEnv()
     {
-        if(self::$environment !== null) {
+        if (self::$environment !== null) {
             return self::$environment;
         }
 
@@ -98,6 +124,9 @@ class Profiler implements LoggerAwareInterface
 
         self::$instance->context->initiate();
 
+        $dispatcher = self::$instance->context->getProcess()->getDispatcher();
+        self::$instance->timeline = new Timeline($dispatcher);
+        self::$instance->logger = new Simple($dispatcher);
         return self::$instance;
     }
 
@@ -233,36 +262,44 @@ class Profiler implements LoggerAwareInterface
     }
 
     /**
-     * Start item for the timeline
-     *
-     * @param $key
-     * @param $label
-     * @param null $data
-     * @param null $timetamp
-     */
-    public function start($key, $label, $data = null, $timetamp = null)
-    {
-        $event = new Start($key, $label, $data, $timetamp);
-        $this->getContext()->getProcess()->getDispatcher()->dispatch(Start::EVENT_NAME, $event);
-    }
-
-    /**
-     * End item for the timeline
-     *
-     * @param $key
-     * @param null $timetamp
-     */
-    public function stop($key, $timetamp = null)
-    {
-        $event = new End($key, $timetamp);
-        $this->getContext()->getProcess()->getDispatcher()->dispatch(End::EVENT_NAME, $event);
-    }
-
-    /**
      * @return array
      */
     public function getCollectors()
     {
         return $this->collectors;
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     * @return $this
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        if ($logger instanceof DispatcherAwareInterface) {
+            $logger->setDispatcher(self::$instance->context->getProcess()->getDispatcher());
+        }
+
+        $this->logger = $logger;
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     * @throws \BadMethodCallException
+     */
+    public function __call($name, $arguments)
+    {
+        if ($this->logger !== null && method_exists($this->logger, $name)) {
+            return call_user_func_array(array($this->logger, $name), $arguments);
+        }
+
+        if ($this->timeline !== null && method_exists($this->timeline, $name)) {
+            return call_user_func_array(array($this->timeline, $name), $arguments);
+        }
+
+        throw new \BadMethodCallException('Method ' . $name . ' does not exist or is not callable');
     }
 }
