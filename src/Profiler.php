@@ -13,13 +13,17 @@ use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Events\Timeline\End;
 use Ndrx\Profiler\Events\Timeline\Start;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Class Profiler
  * @package Ndrx\Profiler
  */
-class Profiler
+class Profiler implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var ContextInterface
      */
