@@ -292,14 +292,24 @@ class Profiler implements LoggerAwareInterface
      */
     public function __call($name, $arguments)
     {
-        if ($this->logger !== null && method_exists($this->logger, $name)) {
+        if ($this->isMethodAvailable($this->logger, $name)) {
             return call_user_func_array(array($this->logger, $name), $arguments);
         }
 
-        if ($this->timeline !== null && method_exists($this->timeline, $name)) {
+        if ($this->isMethodAvailable($this->timeline, $name)) {
             return call_user_func_array(array($this->timeline, $name), $arguments);
         }
 
         throw new \BadMethodCallException('Method ' . $name . ' does not exist or is not callable');
+    }
+
+    /**
+     * @param $object
+     * @param $methode
+     * @return bool
+     */
+    public function isMethodAvailable($object, $methode)
+    {
+        return $object !== null && method_exists($object, $methode);
     }
 }
