@@ -84,6 +84,19 @@ $id = '1576efef8ea36c74b533238affc3eaec7f94561d';
 $profile = $profiler->getProfile($id);
 ```
 
+### Use monolog handler
+
+``` php
+// create a logger Monolog
+$logger = new \Ndrx\Profiler\Components\Logs\Monolog();
+// set the dispatcher on the logger
+$logger->setDispatcher($profiler->getContext()->getProcess()->getDispatcher());
+$profiler->setLogger($logger);
+
+// $log is your instance of Monolog\Logger
+$log->pushHandler($logger);
+```
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.

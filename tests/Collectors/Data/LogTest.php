@@ -16,7 +16,6 @@ use Ndrx\Profiler\Components\Logs\Monolog;
 use Ndrx\Profiler\Components\Logs\Simple;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\DataSources\Memory;
-use Ndrx\Profiler\Events\Log as LogEvent;
 use Ndrx\Profiler\Process;
 use Ndrx\Profiler\Profiler;
 
