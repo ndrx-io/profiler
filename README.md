@@ -38,7 +38,8 @@ $profiler = ProfilerFactory::build([
     ],
 
     /**
-    * Ndrx\Profiler\Components\Logs\Monolog or Ndrx\Profiler\Components\Logs\Simple available
+    * Ndrx\Profiler\Components\Logs\Monolog
+    * or Ndrx\Profiler\Components\Logs\Simple available
     **/
     ProfilerFactory::LOGGER => Ndrx\Profiler\Components\Logs\Monolog::class
 ]);
@@ -46,19 +47,6 @@ $profiler = ProfilerFactory::build([
 // initialize the profiler
 $profiler->initiate();
 
-// register some data collector
-$profiler->registerCollectorClasses([
-    Ndrx\Profiler\Collectors\Data\PhpVersion::class,
-    Ndrx\Profiler\Collectors\Data\CpuUsage::class,
-    Ndrx\Profiler\Collectors\Data\Context::class,
-    Ndrx\Profiler\Collectors\Data\Timeline::class,
-    Ndrx\Profiler\Collectors\Data\Request::class,
-    Ndrx\Profiler\Collectors\Data\Log::class,
-    Ndrx\Profiler\Collectors\Data\Duration::class,
-]);
-
-// initialize the profiler
-$profiler->initiate();
 ```
 
 ### Add event to the timeline
@@ -100,6 +88,7 @@ $profile = $profiler->getProfile($id);
 
 ``` php
 $profile = $profiler->getDatasource()->clear();
+```
 
 ### Use monolog handler
 
