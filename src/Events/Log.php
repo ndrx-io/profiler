@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\Event;
 
 class Log extends Event
 {
-
     const EVENT_NAME = 'profiler.log';
 
     protected $level;

@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 interface DispatcherAwareInterface
 {
-
     /**
      * @return EventDispatcher
      */

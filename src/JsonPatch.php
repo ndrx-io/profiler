@@ -84,19 +84,14 @@ class JsonPatch
      */
     public function compile($patchs, $targetDocument = '{}')
     {
-
         foreach ($patchs as $patch) {
             try {
                 $patch = new Patch($targetDocument, $patch);
                 $targetDocument = $patch->apply();
             } catch (InvalidPatchDocumentJsonException $e) {
-
             } catch (InvalidTargetDocumentJsonException $e) {
-
             } catch (InvalidOperationException $e) {
-
             } catch (FailedTestException $e) {
-
             }
         }
 

@@ -14,7 +14,6 @@ use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 
 class Request extends Collector implements StartCollectorInterface
 {
-
     /**
      * Fetch data
      *

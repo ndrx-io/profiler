@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Components;
 
-
 use Ndrx\Profiler\Events\DispatcherAwareInterface;
 use Ndrx\Profiler\Events\DispatcherAwareTrait;
 use Ndrx\Profiler\Events\Timeline\End;
