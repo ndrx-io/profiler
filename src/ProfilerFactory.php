@@ -9,16 +9,16 @@ use Ndrx\Profiler\Collectors\Data\Request;
 use Ndrx\Profiler\Collectors\Data\Timeline;
 use Ndrx\Profiler\Components\Logs\Monolog;
 use Ndrx\Profiler\Components\Logs\Simple;
+use Ndrx\Profiler\Components\Timeline as TimelineComponent;
 use Ndrx\Profiler\DataSources\File;
 use Ndrx\Profiler\DataSources\Memory;
-use Ndrx\Profiler\Components\Timeline as TimelineComponent;
+use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\Exception\NoSuchOptionException;
 use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\Exception\AccessException;
 
 /**
  * Class ProfilerFactory
