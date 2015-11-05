@@ -13,10 +13,8 @@ use Ndrx\Profiler\Profiler;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
 
 /**
- * Created by PhpStorm.
- * User: arnaud
- * Date: 03/11/15
- * Time: 22:08
+ * Class ProfilerTest
+ * @package Ndrx\Profiler\Test
  */
 class ProfilerTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,8 +28,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         Profiler::$environment = 'cli';
-        Profiler::destroy();
-        $this->profiler = Profiler::getInstance();
+        $this->profiler = new Profiler();
 
         $this->profiler->setDataSource(new Memory());
     }

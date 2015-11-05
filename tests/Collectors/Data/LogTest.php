@@ -47,7 +47,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->datasource = new Memory();
-        $this->profiler = Profiler::getInstance();
+        $this->profiler = new Profiler();
         $this->profiler->setDataSource($this->datasource);
         $this->process = $this->profiler->getContext()->getProcess();
         $this->collector = new Log($this->process, $this->profiler->getDatasource());

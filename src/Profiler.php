@@ -2,7 +2,6 @@
 
 namespace Ndrx\Profiler;
 
-use Ndrx\Profiler\Components\Logs\Simple;
 use Ndrx\Profiler\Components\Timeline;
 use Ndrx\Profiler\Collectors\Data\Request;
 use Ndrx\Profiler\Context\Cli;
@@ -14,7 +13,6 @@ use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Events\DispatcherAwareInterface;
-use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
@@ -38,7 +36,7 @@ use Psr\Log\LoggerInterface;
  *
  * @package Ndrx\Profiler
  */
-class Profiler implements LoggerAwareInterface
+class Profiler implements ProfilerInterface
 {
     use LoggerAwareTrait;
 
@@ -58,11 +56,6 @@ class Profiler implements LoggerAwareInterface
     protected $timeline;
 
     /**
-     * @var Profiler
-     */
-    protected static $instance;
-
-    /**
      * @var array
      */
     protected $collectors;
@@ -75,18 +68,22 @@ class Profiler implements LoggerAwareInterface
     /**
      *
      */
-    protected function __construct()
+    public function __construct()
     {
         $this->collectors = [
             'initial' => [],
             'final' => [],
             'stream' => []
         ];
-    }
 
-    public function __destruct()
-    {
-        $this->terminate();
+        // set the good context
+        if (self::detectEnv() === 'cli') {
+            $this->context = new Cli();
+        } else {
+            $this->context = new Http();
+        }
+
+        $this->context->initiate();
     }
 
     /**
@@ -99,43 +96,6 @@ class Profiler implements LoggerAwareInterface
         }
 
         return php_sapi_name();
-    }
-
-    /**
-     * @return Profiler
-     */
-    public static function getInstance()
-    {
-        if (!is_null(self::$instance)) {
-            return self::$instance;
-        }
-
-        self::$instance = new self();
-        // set the good context
-        switch (self::detectEnv()) {
-            case 'cli':
-
-                self::$instance->context = new Cli();
-                break;
-
-            default:
-                self::$instance->context = new Http();
-        }
-
-        self::$instance->context->initiate();
-
-        $dispatcher = self::$instance->context->getProcess()->getDispatcher();
-        self::$instance->timeline = new Timeline($dispatcher);
-
-        return self::$instance;
-    }
-
-    /**
-     * @author LAHAXE Arnaud
-     */
-    public static function destroy()
-    {
-        self::$instance = null;
     }
 
     /**
@@ -276,12 +236,20 @@ class Profiler implements LoggerAwareInterface
     public function setLogger(LoggerInterface $logger)
     {
         if ($logger instanceof DispatcherAwareInterface) {
-            $logger->setDispatcher(self::$instance->context->getProcess()->getDispatcher());
+            $logger->setDispatcher($this->context->getProcess()->getDispatcher());
         }
 
         $this->logger = $logger;
 
         return $this;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function getLogger()
+    {
+        return $this->logger;
     }
 
     /**
@@ -308,8 +276,16 @@ class Profiler implements LoggerAwareInterface
      * @param $methode
      * @return bool
      */
-    public function isMethodAvailable($object, $methode)
+    protected function isMethodAvailable($object, $methode)
     {
         return $object !== null && method_exists($object, $methode);
+    }
+
+    /**
+     * @param Timeline $timeline
+     */
+    public function setTimeline($timeline)
+    {
+        $this->timeline = $timeline;
     }
 }

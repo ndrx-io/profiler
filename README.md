@@ -23,16 +23,28 @@ $ composer require ndrx-io/profiler
 
 ``` php
 // build a new profiler
-$profiler = \Ndrx\Profiler\Profiler::getInstance();
+$profiler = ProfilerFactory::build([
+    ProfilerFactory::OPTION_ENABLE => true,
+    ProfilerFactory::OPTION_DATASOURCE_PROFILES_FOLDER => '/tmp',
+    ProfilerFactory::OPTION_COLLECTORS => [
+        Ndrx\Profiler\Collectors\Data\PhpVersion::class,
+        Ndrx\Profiler\Collectors\Data\CpuUsage::class,
+        Ndrx\Profiler\Collectors\Data\Context::class,
+        Ndrx\Profiler\Collectors\Data\Timeline::class,
+        Ndrx\Profiler\Collectors\Data\Request::class,
+        Ndrx\Profiler\Collectors\Data\Log::class,
+        Ndrx\Profiler\Collectors\Data\Duration::class,
+        // add other data collector ...
+    ],
 
-// add a datasource
-$profiler->setDataSource(new \Ndrx\Profiler\DataSources\File('/tmp/profiler'));
+    /**
+    * Ndrx\Profiler\Components\Logs\Monolog or Ndrx\Profiler\Components\Logs\Simple available
+    **/
+    ProfilerFactory::LOGGER => Ndrx\Profiler\Components\Logs\Monolog::class
+]);
 
-// create a logger Simple or Monolog
-$logger = new \Ndrx\Profiler\Components\Logs\Simple();
-// set the dispatcher on the logger
-$logger->setDispatcher($profiler->getContext()->getProcess()->getDispatcher());
-$profiler->setLogger($logger);
+// initialize the profiler
+$profiler->initiate();
 
 // register some data collector
 $profiler->registerCollectorClasses([
@@ -84,17 +96,21 @@ $id = '1576efef8ea36c74b533238affc3eaec7f94561d';
 $profile = $profiler->getProfile($id);
 ```
 
+### Clear all data
+
+``` php
+$profile = $profiler->getDatasource()->clear();
+
 ### Use monolog handler
 
 ``` php
-// create a logger Monolog
-$logger = new \Ndrx\Profiler\Components\Logs\Monolog();
-// set the dispatcher on the logger
-$logger->setDispatcher($profiler->getContext()->getProcess()->getDispatcher());
-$profiler->setLogger($logger);
+$profiler = ProfilerFactory::build([
+    // ...
+    ProfilerFactory::LOGGER => Ndrx\Profiler\Components\Logs\Monolog::class
+]);
 
 // $log is your instance of Monolog\Logger
-$log->pushHandler($logger);
+$log->pushHandler($profiler->getLogger();
 ```
 
 ## Change log
