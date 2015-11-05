@@ -178,4 +178,12 @@ class File implements DataSourceInterface
 
         return file_put_contents($fileName, json_encode($item)) !== false;
     }
+
+    /**
+     * @return string
+     */
+    public function getFolder()
+    {
+        return $this->folder;
+    }
 }

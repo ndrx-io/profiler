@@ -14,6 +14,7 @@ use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\Process;
 use Ndrx\Profiler\Profiler;
+use Ndrx\Profiler\Components\Timeline as TimelineComponent;
 
 class TimelineTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,7 +44,9 @@ class TimelineTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->datasource = new Memory();
-        $this->profiler   = Profiler::getInstance();
+        $this->profiler = new Profiler();
+        $dispatcher = $this->profiler->getContext()->getProcess()->getDispatcher();
+        $this->profiler->setTimeline(new TimelineComponent($dispatcher));
         $this->profiler->setDataSource($this->datasource);
         $this->process   = $this->profiler->getContext()->getProcess();
         $this->collector = new Timeline($this->process, $this->profiler->getDatasource());

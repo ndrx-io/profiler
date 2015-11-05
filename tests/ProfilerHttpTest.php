@@ -12,6 +12,7 @@ use Ndrx\Profiler\Context\Http;
 use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\Profiler;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
+use Ndrx\Profiler\ProfilerFactory;
 
 /**
  * Created by PhpStorm.
@@ -25,8 +26,8 @@ class ProfilerHttpTest extends \PHPUnit_Framework_TestCase
     public function testContext()
     {
         Profiler::$environment = 'http';
-        Profiler::destroy();
-        $this->profiler = Profiler::getInstance();
+
+        $this->profiler = ProfilerFactory::build([]);
         $this->assertInstanceOf(ContextInterface::class, $this->profiler->getContext());
         $this->assertInstanceOf(Http::class, $this->profiler->getContext());
         $this->profiler->getContext()->sendDebugIds();

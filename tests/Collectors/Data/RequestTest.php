@@ -38,7 +38,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->datasource = new Memory();
-        $profiler         = Profiler::getInstance();
+        $profiler = new Profiler();
         $profiler->setDataSource($this->datasource);
         $this->process   = $profiler->getContext()->getProcess();
         $this->collector = new Request($this->process, $profiler->getDatasource());
