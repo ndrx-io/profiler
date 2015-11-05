@@ -8,13 +8,9 @@
 
 namespace Ndrx\Profiler\Collectors\Data;
 
-use Ndrx\Profiler\Collectors\Collector;
-use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\Collectors\StreamCollector;
-use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use \Ndrx\Profiler\Events\Log as LogEvent;
 use Ndrx\Profiler\JsonPatch;
-use Ndrx\Profiler\Process;
 
 class Log extends StreamCollector
 {

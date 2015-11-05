@@ -8,12 +8,15 @@
 
 namespace Ndrx\Profiler\Collectors;
 
-use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\JsonPatch;
 use Ndrx\Profiler\Process;
 
+/**
+ * Class StreamCollector
+ * @package Ndrx\Profiler\Collectors
+ */
 abstract class StreamCollector extends Collector implements StreamCollectorInterface
 {
     /**
