@@ -18,7 +18,6 @@ use Ndrx\Profiler\Process;
  */
 class Memory implements DataSourceInterface
 {
-
     const SUMMARY_KEY = 'summary';
 
     protected $memory = [];

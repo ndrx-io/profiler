@@ -16,7 +16,6 @@ use Ndrx\Profiler\Process;
 
 abstract class StreamCollector extends Collector implements StreamCollectorInterface
 {
-
     /**
      * @param Process $process
      * @param DataSourceInterface $dataSource

@@ -13,7 +13,6 @@ use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 
 abstract class Event implements StreamCollectorInterface
 {
-
     /**
      * The path in the final json
      * @example

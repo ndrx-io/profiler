@@ -18,7 +18,6 @@ use Ndrx\Profiler\Process;
 
 class Log extends StreamCollector
 {
-
     /**
      * @author LAHAXE Arnaud
      *
@@ -60,4 +59,3 @@ class Log extends StreamCollector
         $this->data = [];
     }
 }
-

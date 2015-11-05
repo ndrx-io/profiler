@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Components\Logs;
 
-
 use Monolog\Handler\AbstractProcessingHandler;
 use Ndrx\Profiler\Events\DispatcherAwareInterface;
 use Ndrx\Profiler\Events\DispatcherAwareTrait;
@@ -18,7 +17,6 @@ use Psr\Log\LoggerTrait;
 
 class Monolog extends AbstractProcessingHandler implements DispatcherAwareInterface, LoggerInterface
 {
-
     use DispatcherAwareTrait, LoggerTrait;
 
     /**
@@ -44,5 +42,4 @@ class Monolog extends AbstractProcessingHandler implements DispatcherAwareInterf
     {
         $this->log($record['level'], $record['message']);
     }
-
 }

@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Components\Logs;
 
-
 use Ndrx\Profiler\Events\DispatcherAwareInterface;
 use Ndrx\Profiler\Events\DispatcherAwareTrait;
 use Ndrx\Profiler\Events\Log;
@@ -17,7 +16,6 @@ use Psr\Log\LoggerInterface;
 
 class Simple extends AbstractLogger implements DispatcherAwareInterface, LoggerInterface
 {
-
     use DispatcherAwareTrait;
 
     /**

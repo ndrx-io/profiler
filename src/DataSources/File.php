@@ -137,7 +137,6 @@ class File implements DataSourceInterface
         $process = [];
         /** @var SplFileInfo $current */
         foreach ($processFiles as $current) {
-
             $summaryFile = $current->getPath() . DIRECTORY_SEPARATOR
                 . $current->getFilename() . DIRECTORY_SEPARATOR
                 . self::SUMMARY_FILENAME;

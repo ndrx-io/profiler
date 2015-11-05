@@ -13,7 +13,6 @@ use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 
 abstract class User implements StartCollectorInterface
 {
-
     protected $user;
 
     /**

@@ -32,7 +32,7 @@ class CpuUsage extends Collector implements FinalCollectorInterface
         /*
          * getrusage is not available on windows with php < 7
          */
-        if(!function_exists('getrusage')) {
+        if (!function_exists('getrusage')) {
             return 0;
         }
 

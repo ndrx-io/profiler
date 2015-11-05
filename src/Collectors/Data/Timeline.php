@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Collectors\Data;
 
-
 use Ndrx\Profiler\Collectors\StreamCollector;
 use Ndrx\Profiler\Events\Timeline\End;
 use Ndrx\Profiler\Events\Timeline\Start;
@@ -16,7 +15,6 @@ use Ndrx\Profiler\JsonPatch;
 
 class Timeline extends StreamCollector
 {
-
     /**
      * @author LAHAXE Arnaud
      *
