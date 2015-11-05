@@ -95,7 +95,6 @@ class ProfilerFactory
 
         $profiler = new Profiler();
 
-        $datasource = null;
         switch ($options[self::OPTION_DATASOURCE_CLASS]) {
             default:
             case File::class:
