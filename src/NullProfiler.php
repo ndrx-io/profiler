@@ -2,7 +2,7 @@
 
 namespace Ndrx\Profiler;
 
-use Ndrx\Profiler\Context\Http;
+use Ndrx\Profiler\Context\Null;
 use Psr\Log\LoggerInterface;
 use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
 use Ndrx\Profiler\DataSources\Memory;
@@ -44,6 +44,7 @@ class NullProfiler implements ProfilerInterface
      */
     public static function detectEnv()
     {
+        return 'null';
     }
 
     /**
@@ -140,7 +141,8 @@ class NullProfiler implements ProfilerInterface
      */
     public function getContext()
     {
-        return (new Http())->initiate();
+
+        return new Null();
     }
 
     /**
