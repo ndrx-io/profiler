@@ -102,6 +102,154 @@ $profiler = ProfilerFactory::build([
 $log->pushHandler($profiler->getLogger();
 ```
 
+## Add new Collector
+
+All data collector must implements one of those interfaces:
+
+- Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface For data available only at the end of the process, like response data
+- Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface For data available at the beginning of the process, like request data
+- Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface For data available during the process like logs, events, query...
+
+### Initial collector
+``` php
+<?php
+
+namespace /Your/Namespace;
+
+use Ndrx\Profiler\Collectors\Collector;
+use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
+
+class Foo extends Collector implements StartCollectorInterface
+{
+    /**
+     * Fetch data
+     * @return mixed
+     */
+    public function resolve()
+    {
+        $this->data = 'bar';
+    }
+
+    /**
+     * The path in the final json
+     * @example
+     *  path /aa/bb
+     *  will be transformed to
+     *  {
+     *     aa : {
+     *              bb: <VALUE OF RESOLVE>
+     *       }
+     *  }
+     * @return string
+     */
+    public function getPath()
+    {
+        return 'foo';
+    }
+}
+```
+
+### Final collector
+
+``` php
+<?php
+
+namespace /Your/Namespace;
+
+use Ndrx\Profiler\Collectors\Collector;
+use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
+
+class Foo extends Collector implements FinalCollectorInterface
+{
+    /**
+     * Fetch data
+     * @return mixed
+     */
+    public function resolve()
+    {
+        $this->data = 'bar';
+    }
+
+    /**
+     * The path in the final json
+     * @example
+     *  path /aa/bb
+     *  will be transformed to
+     *  {
+     *     aa : {
+     *              bb: <VALUE OF RESOLVE>
+     *       }
+     *  }
+     * @return string
+     */
+    public function getPath()
+    {
+        return 'foo';
+    }
+}
+```
+
+### Stream collector
+
+Stream collector are a little bit more complex because you need to listen events and stream the event data to the datasource. 
+
+``` php
+<?php
+
+namespace Ndrx\Profiler\Collectors\Data;
+
+use Ndrx\Profiler\Collectors\StreamCollector;
+use Ndrx\Profiler\Events\Log as LogEvent;
+use Ndrx\Profiler\JsonPatch;
+
+class Log extends StreamCollector
+{
+
+    protected function registerListeners()
+    {
+        // add a listener to your event dispatcher, the profiler has a build-in dispatcher than use can use
+        $this->process->getDispatcher()->addListener(LogEvent::EVENT_NAME, function (LogEvent $event) {
+            // fetch event data
+            $this->data = $event->toArray();
+            // stream to the data source
+            $this->stream();
+        });
+    }
+
+    /**
+     * The path in the final json
+     * @example
+     *  path /aa/bb
+     *  will be transformed to
+     *  {
+     *     aa : {
+     *              bb: <VALUE OF RESOLVE>
+     *       }
+     *  }
+     * @return mixed
+     */
+    public function getPath()
+    {
+        return 'logs';
+    }
+
+    /**
+     * Write data in the datasource and clean current buffer
+     * @return mixed
+     */
+    public function stream()
+    {
+        // generation of the json patch from data
+        $patch = $this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, $this->data, true);
+        // save the json patch in the datasource
+        $this->dataSource->save($this->process, [$patch]);
+        // clean data array to avoid duplicate entry
+        $this->data = [];
+    }
+}
+```
+
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
