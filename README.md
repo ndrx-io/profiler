@@ -277,7 +277,7 @@ If you discover any security related issues, please email arnaud.lahaxe[at]versu
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/ndrx-io/profiler.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/ndrx/profiler.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/ndrx-io/profiler/master.svg?style=flat-square
 [ico-ndrx]: https://pbs.twimg.com/profile_images/585415130881642497/Qg4niE0o.png
@@ -286,7 +286,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-insight]: https://insight.sensiolabs.com/projects/687eff4f-7bfb-4a0f-af5b-4786f7a614cf/mini.png
 
 
-[link-packagist]: https://packagist.org/packages/ndrx-io/profiler
+[link-packagist]: https://packagist.org/packages/ndrx/profiler
 [link-travis]: https://travis-ci.org/ndrx-io/profiler
 [link-author]: https://github.com/lahaxearnaud
 [link-contributors]: ../../contributors
