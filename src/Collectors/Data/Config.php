@@ -11,16 +11,13 @@ namespace Ndrx\Profiler\Collectors\Data;
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 
-class PhpVersion extends Collector implements StartCollectorInterface
+/**
+ * Class Config
+ * @package Ndrx\Profiler\Collectors\Data
+ */
+abstract class Config extends Collector implements StartCollectorInterface
 {
-    /**
-     * Fetch data
-     * @return mixed
-     */
-    public function resolve()
-    {
-        $this->data = phpversion();
-    }
+
 
     /**
      * The path in the final json
@@ -36,6 +33,6 @@ class PhpVersion extends Collector implements StartCollectorInterface
      */
     public function getPath()
     {
-        return 'php-version';
+        return 'config';
     }
 }
