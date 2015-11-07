@@ -9,7 +9,6 @@
 
 namespace Ndrx\Profiler\Collectors;
 
-use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 
 abstract class Event extends Collector implements StreamCollectorInterface
