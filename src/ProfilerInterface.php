@@ -2,6 +2,7 @@
 
 namespace Ndrx\Profiler;
 
+use Monolog\Handler\AbstractProcessingHandler;
 use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
 use Ndrx\Profiler\Components\Timeline;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
@@ -91,7 +92,7 @@ interface ProfilerInterface extends LoggerAwareInterface
     public function setTimeline($timeline);
 
     /**
-     * @return LoggerInterface
+     * @return LoggerInterface|AbstractProcessingHandler
      */
     public function getLogger();
 }
