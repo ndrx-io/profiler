@@ -7,9 +7,10 @@
  * Project : profiler
  */
 
-namespace Ndrx\Profiler\Collectors;
+namespace Ndrx\Profiler\Collectors\Data;
 
 
+use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 
 abstract class User extends Collector implements StartCollectorInterface
