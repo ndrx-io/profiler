@@ -11,7 +11,7 @@ namespace Ndrx\Profiler\Collectors;
 
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 
-abstract class Event extends Collector implements StreamCollectorInterface
+abstract class Database extends Collector implements StreamCollectorInterface
 {
     /**
      * The path in the final json
@@ -27,6 +27,6 @@ abstract class Event extends Collector implements StreamCollectorInterface
      */
     public function getPath()
     {
-        return 'events';
+        return 'database';
     }
 }

@@ -7,11 +7,12 @@
  * Project : profiler
  */
 
-namespace Collectors\Contracts;
+namespace Ndrx\Profiler\Collectors;
+
 
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 
-abstract class User implements StartCollectorInterface
+abstract class User extends Collector implements StartCollectorInterface
 {
     protected $user;
 
