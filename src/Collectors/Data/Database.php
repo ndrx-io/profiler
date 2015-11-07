@@ -10,6 +10,7 @@
 namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
+use Ndrx\Profiler\Collectors\Collector;
 
 abstract class Database extends Collector implements StreamCollectorInterface
 {
