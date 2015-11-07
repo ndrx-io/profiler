@@ -7,7 +7,8 @@
  * Project : profiler
  */
 
-namespace Collectors\Contracts;
+namespace Ndrx\Profiler\Collectors;
+
 
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 
