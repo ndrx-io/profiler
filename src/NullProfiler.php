@@ -2,7 +2,8 @@
 
 namespace Ndrx\Profiler;
 
-use Ndrx\Profiler\Context\Http;
+use Ndrx\Profiler\Context\NullContext;
+use Ndrx\Profiler\DataSources\NullDataSource;
 use Psr\Log\LoggerInterface;
 use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
 use Ndrx\Profiler\DataSources\Memory;
@@ -15,15 +16,15 @@ use Ndrx\Profiler\Components\Timeline;
  * @method void stop($key, $timetamp = null) Stop a timeline event
  * @method mixed monitor($label, \Closure $closure) Monitor a function
  *
- * @method null emergency($message, array $context = array())
- * @method null alert($message, array $context = array())
- * @method null critical($message, array $context = array())
- * @method null error($message, array $context = array())
- * @method null warning($message, array $context = array())
- * @method null notice($message, array $context = array())
- * @method null info($message, array $context = array())
- * @method null debug($message, array $context = array())
- * @method null log($level, $message, array $context = array())
+ * @method NullContext emergency($message, array $context = array())
+ * @method NullContext alert($message, array $context = array())
+ * @method NullContext critical($message, array $context = array())
+ * @method NullContext error($message, array $context = array())
+ * @method NullContext warning($message, array $context = array())
+ * @method NullContext notice($message, array $context = array())
+ * @method NullContext info($message, array $context = array())
+ * @method NullContext debug($message, array $context = array())
+ * @method NullContext log($level, $message, array $context = array())
  *
  * @package Ndrx\Profiler
  */
@@ -44,6 +45,7 @@ class NullProfiler implements ProfilerInterface
      */
     public static function detectEnv()
     {
+        return 'null';
     }
 
     /**
@@ -123,7 +125,7 @@ class NullProfiler implements ProfilerInterface
      */
     public function getDatasource()
     {
-        return new Memory();
+        return new NullDataSource();
     }
 
     /**
@@ -140,7 +142,8 @@ class NullProfiler implements ProfilerInterface
      */
     public function getContext()
     {
-        return (new Http())->initiate();
+
+        return new NullContext();
     }
 
     /**
