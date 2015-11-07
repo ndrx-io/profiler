@@ -6,14 +6,13 @@ use Ndrx\Profiler\Context\NullContext;
 use Ndrx\Profiler\DataSources\NullDataSource;
 use Psr\Log\LoggerInterface;
 use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
-use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\Components\Timeline;
 
 /**
  * Class NullProfiler
  *
  * @method void start($key, $label, $data = null, $timetamp = null) Start a timeline event
- * @method void stop($key, $timetamp = null) Stop a timeline event
+ * @method void stop($key, $timestamp = null) Stop a timeline event
  * @method mixed monitor($label, \Closure $closure) Monitor a function
  *
  * @method NullContext emergency($message, array $context = array())

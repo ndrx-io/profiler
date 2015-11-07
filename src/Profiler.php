@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  *
  *
  * @method void start($key, $label, $data = null, $timetamp = null) Start a timeline event
- * @method void stop($key, $timetamp = null) Stop a timeline event
+ * @method void stop($key, $timestamp = null) Stop a timeline event
  * @method mixed monitor($label, \Closure $closure) Monitor a function
  *
  * @method null emergency($message, array $context = array())
