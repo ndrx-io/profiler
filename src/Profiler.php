@@ -2,6 +2,7 @@
 
 namespace Ndrx\Profiler;
 
+use Monolog\Handler\AbstractProcessingHandler;
 use Ndrx\Profiler\Components\Timeline;
 use Ndrx\Profiler\Collectors\Data\Request;
 use Ndrx\Profiler\Context\Cli;
@@ -245,7 +246,7 @@ class Profiler implements ProfilerInterface
     }
 
     /**
-     * @return LoggerInterface
+     * @return LoggerInterface|AbstractProcessingHandler
      */
     public function getLogger()
     {
