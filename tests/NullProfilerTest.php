@@ -2,7 +2,7 @@
 
 namespace Ndrx\Profiler\Test;
 
-use Ndrx\Profiler\Context\Null;
+use Ndrx\Profiler\Context\NullContext;
 use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\NullProfiler;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
@@ -30,7 +30,7 @@ class NullProfilerTest extends \PHPUnit_Framework_TestCase
     public function testContext()
     {
         $this->assertInstanceOf(ContextInterface::class, $this->profiler->getContext());
-        $this->assertInstanceOf(Null::class, $this->profiler->getContext());
+        $this->assertInstanceOf(NullContext::class, $this->profiler->getContext());
     }
 
 }

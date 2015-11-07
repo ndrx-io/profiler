@@ -9,7 +9,7 @@ namespace Ndrx\Profiler\Context;
  * Date: 01/11/15
  * Time: 16:38
  */
-class Null extends Context
+class NullContext extends Context
 {
 
     public function initiate()
