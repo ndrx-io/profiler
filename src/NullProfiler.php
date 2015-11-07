@@ -3,6 +3,7 @@
 namespace Ndrx\Profiler;
 
 use Ndrx\Profiler\Context\NullContext;
+use Ndrx\Profiler\DataSources\NullDataSource;
 use Psr\Log\LoggerInterface;
 use Ndrx\Profiler\Collectors\Contracts\CollectorInterface;
 use Ndrx\Profiler\DataSources\Memory;
@@ -124,7 +125,7 @@ class NullProfiler implements ProfilerInterface
      */
     public function getDatasource()
     {
-        return new Memory();
+        return new NullDataSource();
     }
 
     /**

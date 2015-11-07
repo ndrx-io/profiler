@@ -8,6 +8,7 @@ use Ndrx\Profiler\Context\Cli;
 use Ndrx\Profiler\Context\Http;
 use Ndrx\Profiler\DataSources\File;
 use Ndrx\Profiler\DataSources\Memory;
+use Ndrx\Profiler\DataSources\NullDataSource;
 use Ndrx\Profiler\NullProfiler;
 use Ndrx\Profiler\Profiler;
 use Ndrx\Profiler\ProfilerFactory;
@@ -41,7 +42,7 @@ class ProfilerFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertInstanceOf(NullProfiler::class, $profiler);
-        $this->assertInstanceOf(Memory::class, $profiler->getDatasource());
+        $this->assertInstanceOf(NullDataSource::class, $profiler->getDatasource());
     }
 
     public function testMemoryDataSource()

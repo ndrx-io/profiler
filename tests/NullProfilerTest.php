@@ -23,8 +23,6 @@ class NullProfilerTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->profiler = new NullProfiler();
-
-        $this->profiler->setDataSource(new Memory());
     }
 
     public function testContext()
