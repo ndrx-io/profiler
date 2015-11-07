@@ -27,13 +27,13 @@ $profiler = ProfilerFactory::build([
     ProfilerFactory::OPTION_ENABLE => true,
     ProfilerFactory::OPTION_DATASOURCE_PROFILES_FOLDER => '/tmp',
     ProfilerFactory::OPTION_COLLECTORS => [
-        Ndrx\Profiler\Collectors\Data\PhpVersion::class,
-        Ndrx\Profiler\Collectors\Data\CpuUsage::class,
-        Ndrx\Profiler\Collectors\Data\Context::class,
-        Ndrx\Profiler\Collectors\Data\Timeline::class,
-        Ndrx\Profiler\Collectors\Data\Request::class,
-        Ndrx\Profiler\Collectors\Data\Log::class,
-        Ndrx\Profiler\Collectors\Data\Duration::class,
+        \Ndrx\Profiler\Collectors\Data\PhpVersion::class,
+        \Ndrx\Profiler\Collectors\Data\CpuUsage::class,
+        \Ndrx\Profiler\Collectors\Data\Context::class,
+        \Ndrx\Profiler\Collectors\Data\Timeline::class,
+        \Ndrx\Profiler\Collectors\Data\Request::class,
+        \Ndrx\Profiler\Collectors\Data\Log::class,
+        \Ndrx\Profiler\Collectors\Data\Duration::class,
         // add other data collector ...
     ],
 
@@ -41,7 +41,7 @@ $profiler = ProfilerFactory::build([
     * Ndrx\Profiler\Components\Logs\Monolog
     * or Ndrx\Profiler\Components\Logs\Simple available
     **/
-    ProfilerFactory::LOGGER => Ndrx\Profiler\Components\Logs\Monolog::class
+    ProfilerFactory::OPTION_LOGGER => \Ndrx\Profiler\Components\Logs\Monolog::class
 ]);
 
 // initialize the profiler
