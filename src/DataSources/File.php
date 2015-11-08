@@ -186,4 +186,12 @@ class File implements DataSourceInterface
     {
         return $this->folder;
     }
+
+    /**
+     * @param string $folder
+     */
+    public function setFolder($folder)
+    {
+        $this->folder = $folder;
+    }
 }
