@@ -53,12 +53,14 @@ class File implements DataSourceInterface
         $finder = new Finder();
         $iterator = $finder
             ->name('*.json')
-            ->notContains('summary.json')
             ->sortByName()
             ->in($this->getProcessFolder($processId));
 
         /** @var SplFileInfo $file */
         foreach ($iterator as $file) {
+            if (self::SUMMARY_FILENAME === $file->getFilename()) {
+                continue;
+            }
             yield file_get_contents($file->getPath() . DIRECTORY_SEPARATOR . $file->getFilename());
         }
     }
@@ -158,7 +160,7 @@ class File implements DataSourceInterface
     {
         $finder = new Finder();
 
-        return  $finder
+        return $finder
             ->directories()
             ->depth(0)
             ->in($this->folder)
@@ -185,13 +187,5 @@ class File implements DataSourceInterface
     public function getFolder()
     {
         return $this->folder;
-    }
-
-    /**
-     * @param string $folder
-     */
-    public function setFolder($folder)
-    {
-        $this->folder = $folder;
     }
 }
