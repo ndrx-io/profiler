@@ -32,7 +32,7 @@ class End extends Event
     public function __construct($key, $timestamp = null)
     {
         $this->key = $key;
-        $this->timestamp = is_null($timestamp) ? time() : $timestamp;
+        $this->timestamp = is_null($timestamp) ? microtime(true) : $timestamp;
     }
 
     /**

@@ -26,7 +26,7 @@ class Timeline extends StreamCollector
             $this->data = [
                 'key' => md5($event->getKey()),
                 'start' => $event->getTimestamp(),
-                'label' => $event->getKey(),
+                'label' => $event->getLabel(),
                 'data' => $event->getData()
             ];
             $this->stream();
