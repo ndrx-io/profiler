@@ -10,9 +10,9 @@
 namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
-use Ndrx\Profiler\Collectors\Collector;
+use Ndrx\Profiler\Collectors\StreamCollector;
 
-abstract class Event extends Collector implements StreamCollectorInterface
+abstract class Event extends StreamCollector implements StreamCollectorInterface
 {
     /**
      * The path in the final json
