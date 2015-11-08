@@ -2,6 +2,8 @@
 
 namespace Ndrx\Profiler\Context;
 
+use Ndrx\Profiler\Process;
+
 
 /**
  * Created by PhpStorm.
@@ -11,6 +13,13 @@ namespace Ndrx\Profiler\Context;
  */
 class NullContext extends Context
 {
+    /**
+     * NullContext constructor.
+     */
+    public function __construct()
+    {
+        $this->process = Process::build();
+    }
 
     public function initiate()
     {
