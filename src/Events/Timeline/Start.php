@@ -46,7 +46,7 @@ class Start extends Event
         $this->data = $data;
         $this->label = $label;
         $this->key = $key;
-        $this->timestamp = is_null($timestamp) ? time() : $timestamp;
+        $this->timestamp = is_null($timestamp) ? microtime(true) : $timestamp;
     }
 
 
