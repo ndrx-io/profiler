@@ -12,7 +12,7 @@ use Ndrx\Profiler\Process;
  */
 class Http extends Context
 {
-    const HEADER_PROCESS = 'PROFILE-PROCESS-ID';
+    const HEADER_PROCESS = 'Process-Id';
 
     public function initiate()
     {
@@ -26,8 +26,6 @@ class Http extends Context
 
     public function sendDebugIds()
     {
-        if (!headers_sent()) {
-            header(self::HEADER_PROCESS . ": " . $this->process->getId());
-        }
+        header(self::HEADER_PROCESS . ': ' . $this->process->getId());
     }
 }

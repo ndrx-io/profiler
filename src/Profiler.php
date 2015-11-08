@@ -14,8 +14,10 @@ use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Events\DispatcherAwareInterface;
+use Ndrx\Profiler\Events\HttpFoundationResponse;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Profiler
@@ -67,6 +69,11 @@ class Profiler implements ProfilerInterface
     public static $environment;
 
     /**
+     * @var bool
+     */
+    protected $terminated = false;
+
+    /**
      *
      */
     public function __construct()
@@ -81,10 +88,19 @@ class Profiler implements ProfilerInterface
         if (self::detectEnv() === 'cli') {
             $this->context = new Cli();
         } else {
+            // cli-server is considered as a http server
             $this->context = new Http();
         }
 
         $this->context->initiate();
+    }
+
+    /**
+     * Try to terminate the profiler at the destruction if it was not done manually
+     */
+    public function __destruct()
+    {
+        $this->terminate();
     }
 
     /**
@@ -167,6 +183,9 @@ class Profiler implements ProfilerInterface
      */
     public function terminate()
     {
+        if ($this->terminated) {
+            return;
+        }
         $this->runGroup('final');
     }
 
@@ -288,5 +307,13 @@ class Profiler implements ProfilerInterface
     public function setTimeline($timeline)
     {
         $this->timeline = $timeline;
+    }
+
+    /**
+     * @param Response $response
+     */
+    public function setResponse(Response $response)
+    {
+        $this->getContext()->getProcess()->getDispatcher()->dispatch(HttpFoundationResponse::EVENT_NAME, new HttpFoundationResponse($response));
     }
 }
