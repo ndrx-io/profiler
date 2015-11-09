@@ -7,11 +7,12 @@
  * Project : profiler
  */
 
-namespace Collectors\Contracts;
+namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
+use Ndrx\Profiler\Collectors\StreamCollector;
 
-abstract class Mail implements StreamCollectorInterface
+abstract class Mail extends StreamCollector implements StreamCollectorInterface
 {
     /**
      * The path in the final json

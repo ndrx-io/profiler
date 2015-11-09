@@ -10,14 +10,12 @@
 namespace Ndrx\Profiler\Test\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Collector;
-use Ndrx\Profiler\Collectors\Data\CpuUsage;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\Process;
 
-class CpuUsageTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var DataSourceInterface
      */
@@ -40,7 +38,7 @@ class CpuUsageTest extends \PHPUnit_Framework_TestCase
         $this->datasource = new Memory();
         $this->process = Process::build();
 
-        $this->collector = new CpuUsage($this->process, $this->datasource);
+        $this->collector = new Config($this->process, $this->datasource);
     }
 
     public function testResolve()
@@ -49,7 +47,7 @@ class CpuUsageTest extends \PHPUnit_Framework_TestCase
 
         $data = $this->collector->getData();
 
-        $this->assertTrue(is_numeric($data));
+        $this->assertInternalType('array', $data);
     }
 
     public function testPersist()
@@ -58,5 +56,21 @@ class CpuUsageTest extends \PHPUnit_Framework_TestCase
         $this->collector->persist();
 
         $this->assertInstanceOf(\Generator::class, $this->datasource->getProcess($this->process->getId()));
+    }
+}
+
+
+class Config extends \Ndrx\Profiler\Collectors\Data\Config {
+
+    /**
+     * Fetch data
+     * @return void
+     */
+    public function resolve()
+    {
+        $this->data = [
+            'foo' => 'bar',
+            'barr' => 'foo'
+        ];
     }
 }

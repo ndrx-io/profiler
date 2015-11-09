@@ -7,7 +7,7 @@
  * Project : profiler
  */
 
-namespace Collectors\Data;
+namespace Ndrx\Profiler\Test\Collectors\Data;
 
 use Monolog\Logger;
 use Ndrx\Profiler\Collectors\Collector;

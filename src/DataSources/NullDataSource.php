@@ -47,7 +47,7 @@ class NullDataSource implements DataSourceInterface
      */
     public function getProcess($processId)
     {
-        return new \Generator();
+        yield;
     }
 
     /**
