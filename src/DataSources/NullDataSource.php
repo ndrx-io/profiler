@@ -47,7 +47,7 @@ class NullDataSource implements DataSourceInterface
      */
     public function getProcess($processId)
     {
-        yield;
+        yield null;
     }
 
     /**
