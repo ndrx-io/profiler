@@ -20,7 +20,7 @@ class End extends Event
     protected $key;
 
     /**
-     * @var int
+     * @var float
      */
     protected $timestamp;
 
@@ -32,7 +32,7 @@ class End extends Event
     public function __construct($key, $timestamp = null)
     {
         $this->key = $key;
-        $this->timestamp = is_null($timestamp) ? microtime(true) : $timestamp;
+        $this->timestamp = $timestamp === null ? microtime(true) : $timestamp;
     }
 
     /**
@@ -44,7 +44,7 @@ class End extends Event
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getTimestamp()
     {
