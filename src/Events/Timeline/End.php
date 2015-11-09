@@ -27,7 +27,7 @@ class End extends Event
     /**
      * End constructor.
      * @param string $key
-     * @param int $timestamp
+     * @param float $timestamp
      */
     public function __construct($key, $timestamp = null)
     {

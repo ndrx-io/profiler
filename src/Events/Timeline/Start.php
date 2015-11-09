@@ -39,7 +39,7 @@ class Start extends Event
      * @param mixed $data
      * @param string $label
      * @param string $key
-     * @param int $timestamp
+     * @param float $timestamp
      */
     public function __construct($key, $label, $data = null, $timestamp = null)
     {
