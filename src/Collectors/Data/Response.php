@@ -53,35 +53,35 @@ abstract class Response extends Collector implements FinalCollectorInterface
     /**
      * @return int
      */
-    protected abstract function getStatusCode();
+    abstract protected function getStatusCode();
 
     /**
      * @return string
      */
-    protected abstract function getStatusText();
+    abstract protected function getStatusText();
 
     /**
      * @return string
      */
-    protected abstract function getCharset();
+    abstract protected function getCharset();
 
     /**
      * @return int
      */
-    protected abstract function getMaxAge();
+    abstract protected function getMaxAge();
 
     /**
      * @return int
      */
-    protected abstract function getExpires();
+    abstract protected function getExpires();
 
     /**
      * @return \DateTime
      */
-    protected abstract function getLastModified();
+    abstract protected function getLastModified();
 
     /**
      * @return int
      */
-    protected abstract function getTtl();
+    abstract protected function getTtl();
 }
