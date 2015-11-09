@@ -46,7 +46,7 @@ class Start extends Event
         $this->data = $data;
         $this->label = $label;
         $this->key = $key;
-        $this->timestamp = is_null($timestamp) ? microtime(true) : $timestamp;
+        $this->timestamp = $timestamp === null ? microtime(true) : $timestamp;
     }
 
 
@@ -75,7 +75,7 @@ class Start extends Event
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getTimestamp()
     {
