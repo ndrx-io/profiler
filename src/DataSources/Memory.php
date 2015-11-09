@@ -8,6 +8,8 @@
 
 namespace Ndrx\Profiler\DataSources;
 
+use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerBuilder;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Process;
 
@@ -21,6 +23,20 @@ class Memory implements DataSourceInterface
     const SUMMARY_KEY = 'summary';
 
     protected $memory = [];
+
+    /**
+     * @var Serializer
+     */
+    protected $serializer;
+
+    /**
+     * Memory constructor.
+     */
+    public function __construct()
+    {
+        $this->serializer = SerializerBuilder::create()->build();
+    }
+
 
     /**
      * @param int $offset
@@ -57,7 +73,7 @@ class Memory implements DataSourceInterface
         $patchs = $this->memory[$processId];
         unset($patchs[self::SUMMARY_KEY]);
         foreach ($patchs as $patch) {
-            yield json_encode($patch);
+            yield $patch;
         }
     }
 
@@ -83,26 +99,26 @@ class Memory implements DataSourceInterface
 
     /**
      * @param Process $process
-     * @param array   $item
+     * @param array $item
      *
      * @return mixed
      */
     public function save(Process $process, array $item)
     {
         $this->initiateMemoryProcess($process);
-        $this->memory[$process->getId()][] = $item;
+        $this->memory[$process->getId()][] = $this->serializer->serialize($item, 'json');
     }
 
     /**
      * @param Process $process
-     * @param array   $item
+     * @param array $item
      *
      * @return mixed
      */
     public function saveSummary(Process $process, array $item)
     {
         $this->initiateMemoryProcess($process);
-        $this->memory[$process->getId()][self::SUMMARY_KEY] = json_encode($item);
+        $this->memory[$process->getId()][self::SUMMARY_KEY] = $this->serializer->serialize($item, 'json');
     }
 
     protected function initiateMemoryProcess(Process $process)

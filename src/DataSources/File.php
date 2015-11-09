@@ -8,12 +8,14 @@
 
 namespace Ndrx\Profiler\DataSources;
 
+use JMS\Serializer\Serializer;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Process;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use JMS\Serializer\SerializerBuilder;
 
 /**
  * Class File
@@ -34,6 +36,11 @@ class File implements DataSourceInterface
     protected $filesystem;
 
     /**
+     * @var Serializer
+     */
+    protected $serializer;
+
+    /**
      * File constructor.
      */
     public function __construct($outputFolder)
@@ -41,6 +48,7 @@ class File implements DataSourceInterface
         $this->folder = $outputFolder;
 
         $this->filesystem = new Filesystem();
+        $this->serializer = SerializerBuilder::create()->build();
     }
 
     /**
@@ -96,7 +104,7 @@ class File implements DataSourceInterface
             . DIRECTORY_SEPARATOR . microtime(true)
             . '-' . rand() . '.json';
 
-        return file_put_contents($fileName, json_encode($item)) !== false;
+        return file_put_contents($fileName, $this->serializer->serialize($item, 'json')) !== false;
     }
 
     /**
@@ -178,7 +186,7 @@ class File implements DataSourceInterface
         $fileName = $this->getProcessFolder($process->getId())
             . DIRECTORY_SEPARATOR . self::SUMMARY_FILENAME;
 
-        return file_put_contents($fileName, json_encode($item)) !== false;
+        return file_put_contents($fileName, $this->serializer->serialize($item, 'json')) !== false;
     }
 
     /**
