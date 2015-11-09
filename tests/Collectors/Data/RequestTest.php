@@ -6,7 +6,7 @@
  * Project : profiler
  */
 
-namespace Collectors\Data;
+namespace Ndrx\Profiler\Test\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Data\Request;

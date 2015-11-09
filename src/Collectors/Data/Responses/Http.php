@@ -40,7 +40,7 @@ class Http extends Response
     /**
      * @return int
      */
-    protected function getStatusCode()
+    public function getStatusCode()
     {
         if ($this->response === null) {
             return null;

@@ -53,7 +53,7 @@ abstract class Response extends Collector implements FinalCollectorInterface
     /**
      * @return int
      */
-    abstract protected function getStatusCode();
+    abstract public function getStatusCode();
 
     /**
      * @return string

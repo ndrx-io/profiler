@@ -12,7 +12,7 @@ namespace Ndrx\Profiler\Collectors\Data;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\Collectors\StreamCollector;
 
-abstract class Mail extends StreamCollector implements StreamCollectorInterface
+abstract class Cache extends StreamCollector implements StreamCollectorInterface
 {
     /**
      * The path in the final json
@@ -28,6 +28,6 @@ abstract class Mail extends StreamCollector implements StreamCollectorInterface
      */
     public function getPath()
     {
-        return 'mails';
+        return 'cache';
     }
 }

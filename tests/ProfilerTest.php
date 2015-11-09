@@ -6,8 +6,10 @@ use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Data\Duration;
 use Ndrx\Profiler\Collectors\Data\PhpVersion;
 use Ndrx\Profiler\Collectors\Data\Request;
+use Ndrx\Profiler\Collectors\Data\Responses\Http;
 use Ndrx\Profiler\Collectors\Data\Timeline;
 use Ndrx\Profiler\Context\Cli;
+use Ndrx\Profiler\DataSources\File;
 use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\Profiler;
 use Ndrx\Profiler\Context\Contracts\ContextInterface;
@@ -126,7 +128,28 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     public function testTerminate()
     {
         $this->profiler->registerCollectorClasses([
-            Duration::class
+            Duration::class,
+            Request::class,
+            Http::class
+        ]);
+        $this->profiler->initiate();
+        $this->profiler->terminate();
+
+        $process = $this->profiler->getContext()->getProcess();
+        $this->assertInstanceOf(\Generator::class, $this->profiler->getDatasource()->getProcess($process->getId()));
+
+        $profile = $this->profiler->getProfile($process->getId());
+        $this->assertObjectHasAttribute('duration', $profile);
+    }
+
+    public function testTerminateFileDatasource()
+    {
+        $folder = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data' .DIRECTORY_SEPARATOR;
+        $this->profiler->setDataSource(new File($folder));
+        $this->profiler->registerCollectorClasses([
+            Duration::class,
+            Request::class,
+            Http::class
         ]);
         $this->profiler->initiate();
         $this->profiler->terminate();

@@ -18,6 +18,7 @@ use Ndrx\Profiler\Events\HttpFoundationResponse;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use \Ndrx\Profiler\Collectors\Data\Response as ResponseCollector;
 
 /**
  * Class Profiler
@@ -203,7 +204,12 @@ class Profiler implements ProfilerInterface
                     'uri' => $data['uri'],
                     'time' => time()
                 ]);
+            } elseif ($collector instanceof ResponseCollector) {
+                $this->datasource->saveSummary($this->context->getProcess(), [
+                    'status' => $collector->getStatusCode()
+                ]);
             }
+
             $collector->persist();
         }
     }

@@ -2,6 +2,7 @@
 
 namespace Ndrx\Profiler;
 
+use Ndrx\Profiler\Components\Logs\Simple;
 use Ndrx\Profiler\Context\NullContext;
 use Ndrx\Profiler\DataSources\NullDataSource;
 use Psr\Log\LoggerInterface;
@@ -133,7 +134,7 @@ class NullProfiler implements ProfilerInterface
      */
     public function getProfile($id)
     {
-        return [];
+        return new \stdClass();
     }
 
     /**
@@ -167,5 +168,6 @@ class NullProfiler implements ProfilerInterface
      */
     public function getLogger()
     {
+        return new Simple();
     }
 }
