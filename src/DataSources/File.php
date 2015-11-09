@@ -186,6 +186,15 @@ class File implements DataSourceInterface
         $fileName = $this->getProcessFolder($process->getId())
             . DIRECTORY_SEPARATOR . self::SUMMARY_FILENAME;
 
+        if ($this->filesystem->exists($fileName)) {
+            $content = json_decode(file_get_contents($fileName));
+            if (is_bool($content)) {
+                $content = [];
+            }
+
+            $item = array_merge((array) $content, $item);
+        }
+
         return file_put_contents($fileName, $this->serializer->serialize($item, 'json')) !== false;
     }
 

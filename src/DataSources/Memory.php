@@ -118,6 +118,13 @@ class Memory implements DataSourceInterface
     public function saveSummary(Process $process, array $item)
     {
         $this->initiateMemoryProcess($process);
+        if (array_key_exists($process->getId(), $this->memory)
+            && array_key_exists(self::SUMMARY_KEY, $this->memory[$process->getId()])
+        ) {
+            $content = (array)json_decode($this->memory[$process->getId()][self::SUMMARY_KEY]);
+            $item = array_merge($content, $item);
+        }
+
         $this->memory[$process->getId()][self::SUMMARY_KEY] = $this->serializer->serialize($item, 'json');
     }
 
