@@ -41,6 +41,7 @@ class File implements DataSourceInterface
         $this->folder = $outputFolder;
 
         $this->filesystem = new Filesystem();
+        $this->initializeFolder();
     }
 
     /**
@@ -50,6 +51,7 @@ class File implements DataSourceInterface
      */
     public function getProcess($processId)
     {
+
         $finder = new Finder();
         $iterator = $finder
             ->name('*.json')
@@ -97,6 +99,17 @@ class File implements DataSourceInterface
             . '-' . rand() . '.json';
 
         return file_put_contents($fileName, json_encode($item)) !== false;
+    }
+
+    /**
+     * @return string
+     * @throws IOException
+     */
+    protected function initializeFolder()
+    {
+        if (!is_dir($this->folder)) {
+            $this->filesystem->mkdir($this->folder, 0777);
+        }
     }
 
     /**
