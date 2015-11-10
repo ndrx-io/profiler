@@ -8,14 +8,12 @@
 
 namespace Ndrx\Profiler\DataSources;
 
-use JMS\Serializer\Serializer;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Process;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use JMS\Serializer\SerializerBuilder;
 
 /**
  * Class File
@@ -36,11 +34,6 @@ class File implements DataSourceInterface
     protected $filesystem;
 
     /**
-     * @var Serializer
-     */
-    protected $serializer;
-
-    /**
      * File constructor.
      */
     public function __construct($outputFolder)
@@ -48,7 +41,7 @@ class File implements DataSourceInterface
         $this->folder = $outputFolder;
 
         $this->filesystem = new Filesystem();
-        $this->serializer = SerializerBuilder::create()->build();
+        $this->initializeFolder();
     }
 
     /**
@@ -58,6 +51,7 @@ class File implements DataSourceInterface
      */
     public function getProcess($processId)
     {
+
         $finder = new Finder();
         $iterator = $finder
             ->name('*.json')
@@ -104,7 +98,18 @@ class File implements DataSourceInterface
             . DIRECTORY_SEPARATOR . microtime(true)
             . '-' . rand() . '.json';
 
-        return file_put_contents($fileName, $this->serializer->serialize($item, 'json')) !== false;
+        return file_put_contents($fileName, json_encode($item)) !== false;
+    }
+
+    /**
+     * @return string
+     * @throws IOException
+     */
+    protected function initializeFolder()
+    {
+        if (!is_dir($this->folder)) {
+            $this->filesystem->mkdir($this->folder, 0777);
+        }
     }
 
     /**
@@ -195,7 +200,7 @@ class File implements DataSourceInterface
             $item = array_merge((array) $content, $item);
         }
 
-        return file_put_contents($fileName, $this->serializer->serialize($item, 'json')) !== false;
+        return file_put_contents($fileName, json_encode($item)) !== false;
     }
 
     /**
