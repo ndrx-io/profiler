@@ -8,8 +8,6 @@
 
 namespace Ndrx\Profiler\DataSources;
 
-use JMS\Serializer\Serializer;
-use JMS\Serializer\SerializerBuilder;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\Process;
 
@@ -23,20 +21,6 @@ class Memory implements DataSourceInterface
     const SUMMARY_KEY = 'summary';
 
     protected $memory = [];
-
-    /**
-     * @var Serializer
-     */
-    protected $serializer;
-
-    /**
-     * Memory constructor.
-     */
-    public function __construct()
-    {
-        $this->serializer = SerializerBuilder::create()->build();
-    }
-
 
     /**
      * @param int $offset
@@ -106,7 +90,7 @@ class Memory implements DataSourceInterface
     public function save(Process $process, array $item)
     {
         $this->initiateMemoryProcess($process);
-        $this->memory[$process->getId()][] = $this->serializer->serialize($item, 'json');
+        $this->memory[$process->getId()][] = json_encode($item);
     }
 
     /**
@@ -125,7 +109,7 @@ class Memory implements DataSourceInterface
             $item = array_merge($content, $item);
         }
 
-        $this->memory[$process->getId()][self::SUMMARY_KEY] = $this->serializer->serialize($item, 'json');
+        $this->memory[$process->getId()][self::SUMMARY_KEY] = json_encode($item);
     }
 
     protected function initiateMemoryProcess(Process $process)
