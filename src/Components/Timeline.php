@@ -56,7 +56,7 @@ class Timeline implements DispatcherAwareInterface
     /**
      * @param $label
      * @param \Closure $closure
-     * @raturn mixed
+     * @return mixed
      */
     public function monitor($label, \Closure $closure)
     {
