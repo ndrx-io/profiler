@@ -9,37 +9,27 @@
 
 namespace Ndrx\Profiler\Collectors\Data;
 
-use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
-use Ndrx\Profiler\Collectors\StreamCollector;
-use Ndrx\Profiler\JsonPatch;
 
-abstract class Cache extends StreamCollector implements StreamCollectorInterface
+use Ndrx\Profiler\Collectors\Collector;
+use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
+
+abstract class Route extends Collector implements StartCollectorInterface
 {
     /**
-     * Write data in the datasource and clean current buffer
-     * @return mixed
-     */
-    public function stream()
-    {
-        $patch = $this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, $this->data, true);
-        $this->dataSource->save($this->process, [$patch]);
-        $this->data = [];
-    }
-
-    /**
      * The path in the final json
+     *
      * @example
-     *  path /aa/bb
-     *  will be transformed to
-     *  {
-     *     aa : {
+     *              path /aa/bb
+     *              will be transformed to
+     *              {
+     *              aa : {
      *              bb: <VALUE OF RESOLVE>
-     *       }
-     *  }
-     * @return mixed
+     *              }
+     *              }
+     * @return string
      */
     public function getPath()
     {
-        return 'cache';
+        return 'routes';
     }
 }

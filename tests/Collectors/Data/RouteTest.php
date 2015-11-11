@@ -14,7 +14,7 @@ use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\DataSources\Memory;
 use Ndrx\Profiler\Process;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class RouteTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var DataSourceInterface
@@ -38,12 +38,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->datasource = new Memory();
         $this->process = Process::build();
 
-        $this->collector = new User($this->process, $this->datasource);
-        $user = new \stdClass();
-        $user->email = 'foo@bar.fr';
-        $user->id = 1;
-        $user->phone = '+33123456789';
-        $this->collector->setUser($user);
+        $this->collector = new Route($this->process, $this->datasource);
     }
 
     public function testSetUser()
@@ -62,7 +57,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $data = $this->collector->getData();
         $this->assertInternalType('array', $data);
-        $this->assertEquals(1, $this->collector->getUser()->id);
     }
 
     public function testPersist()
@@ -75,37 +69,22 @@ class UserTest extends \PHPUnit_Framework_TestCase
 }
 
 
-class User extends \Ndrx\Profiler\Collectors\Data\User {
+class Route extends \Ndrx\Profiler\Collectors\Data\Route
+{
 
     /**
-     * Return the user user identifier email/username or whatever
-     *
-     * @return string
+     * Fetch data
+     * @return void
      */
-    public function getIdentifier()
+    public function resolve()
     {
-        return $this->user->email;
-    }
-
-    /**
-     * Return the user id or uuid
-     *
-     * @return string|int
-     */
-    public function getId()
-    {
-        return $this->user->id;
-    }
-
-    /**
-     * User details for examples roles, timestamps...
-     *
-     * @return array
-     */
-    public function getDetails()
-    {
-        return [
-            'phone' => $this->user->phone
+        $this->data = [
+            [
+                'uri' => '/foo/{bar}',
+                'name' => 'foo',
+                'acl' => ['foo', 'bar'],
+                'middleware' => ['admin', 'cors']
+            ]
         ];
     }
 }
