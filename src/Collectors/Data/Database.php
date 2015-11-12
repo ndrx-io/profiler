@@ -30,4 +30,6 @@ abstract class Database extends StreamCollector implements StreamCollectorInterf
     {
         return 'database';
     }
+
+
 }

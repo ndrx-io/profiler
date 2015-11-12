@@ -81,8 +81,9 @@ class Route extends \Ndrx\Profiler\Collectors\Data\Route
         $this->data = [
             [
                 'uri' => '/foo/{bar}',
+                'method' => 'GET',
                 'name' => 'foo',
-                'acl' => ['foo', 'bar'],
+                'action' => '\Foo\BarController.php',
                 'middleware' => ['admin', 'cors']
             ]
         ];

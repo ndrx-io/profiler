@@ -26,6 +26,13 @@ abstract class Cache extends StreamCollector implements StreamCollectorInterface
         $this->data = [];
     }
 
+    public function getDataFields()
+    {
+        return [
+            'action', 'value', 'lifetime', 'key', 'result', 'success'
+        ];
+    }
+
     /**
      * The path in the final json
      * @example

@@ -31,6 +31,13 @@ abstract class User extends Collector implements StartCollectorInterface
         ];
     }
 
+    public function getDataFields()
+    {
+        return [
+            'id', 'identifier', 'detail'
+        ];
+    }
+
     /**
      * The path in the final json
      *

@@ -32,6 +32,13 @@ abstract class Template extends StreamCollector implements StreamCollectorInterf
         return 'template';
     }
 
+    public function getDataFields()
+    {
+        return [
+            'name', 'data', 'time', 'file'
+        ];
+    }
+
     /**
      * Write data in the datasource and clean current buffer
      * @return mixed
