@@ -29,6 +29,13 @@ class Context extends Collector implements StartCollectorInterface
         ];
     }
 
+    public function getDataFields()
+    {
+        return [
+            'environment', 'date', 'time', 'timestamp', 'process-id', 'parent-process-id'
+        ];
+    }
+
     /**
      * The path in the final json
      * @example

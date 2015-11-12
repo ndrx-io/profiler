@@ -13,6 +13,7 @@ use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\JsonPatch;
 use Ndrx\Profiler\Process;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class Collector implements CollectorInterface
 {
@@ -35,6 +36,11 @@ abstract class Collector implements CollectorInterface
     protected $jsonPatch;
 
     /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
      * @param Process $process
      * @param DataSourceInterface $dataSource
      * @param JsonPatch|null $jsonPatch
@@ -48,6 +54,24 @@ abstract class Collector implements CollectorInterface
         if ($jsonPatch === null) {
             $this->jsonPatch = new JsonPatch();
         }
+
+        $this->validator = new Validator($this->getDataFields(), $this->getDefaultValue());
+    }
+
+    /**
+     * @return array
+     */
+    public function getDataFields()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultValue()
+    {
+        return [];
     }
 
     /**
@@ -56,6 +80,8 @@ abstract class Collector implements CollectorInterface
      */
     public function persist()
     {
+        $this->validate();
+
         if (!is_array($this->data)) {
             $this->data = [$this->data];
         }
@@ -65,6 +91,11 @@ abstract class Collector implements CollectorInterface
         $this->dataSource->save($this->process, $patches);
 
         $this->data = [];
+    }
+
+    public function validate()
+    {
+        $this->validator->validate($this->data);
     }
 
     /**

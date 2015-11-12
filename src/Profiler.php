@@ -194,23 +194,31 @@ class Profiler implements ProfilerInterface
     {
         /** @var CollectorInterface $collector */
         foreach ($this->collectors[$name] as $collector) {
-            $collector->resolve();
-            if ($collector instanceof Request) {
-                $data = $collector->getData();
+            try {
+                $collector->resolve();
+                if ($collector instanceof Request) {
+                    $data = $collector->getData();
 
-                $this->datasource->saveSummary($this->context->getProcess(), [
-                    'id' => $this->context->getProcess()->getId(),
-                    'method' => $data['method'],
-                    'uri' => $data['uri'],
-                    'time' => time()
-                ]);
-            } elseif ($collector instanceof ResponseCollector) {
-                $this->datasource->saveSummary($this->context->getProcess(), [
-                    'status' => $collector->getStatusCode()
-                ]);
+                    $this->datasource->saveSummary($this->context->getProcess(), [
+                        'id' => $this->context->getProcess()->getId(),
+                        'method' => $data['method'],
+                        'uri' => $data['uri'],
+                        'time' => time()
+                    ]);
+                } elseif ($collector instanceof ResponseCollector) {
+                    $this->datasource->saveSummary($this->context->getProcess(), [
+                        'status' => $collector->getStatusCode()
+                    ]);
+                }
+
+                $collector->persist();
+            } catch (\Exception $e) {
+                if(!$this->logger === null) {
+                    $this->emergency($e->getMessage(), [
+                        'collector', get_class($collector)
+                    ]);
+                }
             }
-
-            $collector->persist();
         }
     }
 

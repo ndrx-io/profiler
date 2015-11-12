@@ -32,4 +32,20 @@ abstract class Route extends Collector implements StartCollectorInterface
     {
         return 'routes';
     }
+
+    public function getDataFields()
+    {
+        return [
+            'method', 'uri', 'name', 'action', 'middleware'
+        ];
+    }
+
+    public function validate()
+    {
+        foreach($this->data as $element) {
+            $this->validator->validate($element);
+        }
+    }
+
+
 }

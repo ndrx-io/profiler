@@ -33,6 +33,13 @@ class Included extends Collector implements FinalCollectorInterface
         return 'files';
     }
 
+    public function validate()
+    {
+        if(!is_array($this->data)) {
+            throw new \LogicException('Duration must be an array ' . json_encode($this->data) . ' given');
+        }
+    }
+
     /**
      * Fetch data
      * @return void

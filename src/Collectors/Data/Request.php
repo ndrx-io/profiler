@@ -50,6 +50,16 @@ class Request extends Collector implements StartCollectorInterface
         ];
     }
 
+
+    public function getDataFields()
+    {
+        return [
+            'method', 'real-method', 'uri', 'scriptName', 'port', 'ssl', 'scheme',
+            'accept-content-types', 'cookies', 'headers', 'data',
+            'charsets', 'default-local', 'local', 'encodings', 'etags', 'session'
+        ];
+    }
+
     /**
      * The path in the final json
      *

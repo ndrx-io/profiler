@@ -22,6 +22,13 @@ class PhpVersion extends Collector implements StartCollectorInterface
         $this->data = phpversion();
     }
 
+    public function validate()
+    {
+        if(!is_string($this->data)) {
+            throw new \LogicException('Duration must be a string ' . json_encode($this->data) . ' given');
+        }
+    }
+
     /**
      * The path in the final json
      * @example

@@ -50,6 +50,14 @@ class CpuUsage extends Collector implements FinalCollectorInterface
         $this->data =  $this->getUsage() - $this->initialCpuUsage;
     }
 
+
+    public function validate()
+    {
+        if(!is_numeric($this->data)) {
+            throw new \LogicException('Duration must be a numeric ' . json_encode($this->data) . ' given');
+        }
+    }
+
     /**
      * The path in the final json
      * @example

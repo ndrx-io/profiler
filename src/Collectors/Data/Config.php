@@ -17,6 +17,12 @@ use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
  */
 abstract class Config extends Collector implements StartCollectorInterface
 {
+    public function validate()
+    {
+        if(!is_array($this->data)) {
+            throw new \LogicException('Duration must be an array ' . json_encode($this->data) . ' given');
+        }
+    }
 
 
     /**

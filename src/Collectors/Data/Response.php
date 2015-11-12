@@ -50,6 +50,13 @@ abstract class Response extends Collector implements FinalCollectorInterface
         ];
     }
 
+    public function getDataFields()
+    {
+        return [
+            'status', 'charset', 'maxAge', 'expires', 'lastModified', 'ttl'
+        ];
+    }
+
     /**
      * @return int
      */

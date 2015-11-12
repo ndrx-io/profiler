@@ -11,6 +11,7 @@ namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\Collectors\StreamCollector;
+use Ndrx\Profiler\JsonPatch;
 
 abstract class Event extends StreamCollector implements StreamCollectorInterface
 {
@@ -29,5 +30,23 @@ abstract class Event extends StreamCollector implements StreamCollectorInterface
     public function getPath()
     {
         return 'events';
+    }
+
+    public function getDataFields()
+    {
+        return [
+            'name', 'param', 'time'
+        ];
+    }
+
+    /**
+     * Write data in the datasource and clean current buffer
+     * @return mixed
+     */
+    public function stream()
+    {
+        $patch = $this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, $this->data, true);
+        $this->dataSource->save($this->process, [$patch]);
+        $this->data = [];
     }
 }

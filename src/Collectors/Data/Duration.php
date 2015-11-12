@@ -27,6 +27,12 @@ class Duration extends Collector implements FinalCollectorInterface
         parent::__construct($process, $dataSource, $jsonPatch);
     }
 
+    public function validate()
+    {
+        if(!is_numeric($this->data)) {
+            throw new \LogicException('Duration must be a number ' . json_encode($this->data) . ' given');
+        }
+    }
 
     /**
      * Fetch data
