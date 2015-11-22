@@ -12,6 +12,7 @@ namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
+use Ndrx\Profiler\Renderer\RendererInterface;
 
 abstract class User extends Collector implements StartCollectorInterface
 {
@@ -74,6 +75,16 @@ abstract class User extends Collector implements StartCollectorInterface
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return RendererInterface
+     *
+     * @throws \RuntimeException
+     */
+    public function getRenderer()
+    {
+        return new \Ndrx\Profiler\Renderer\Html\Data\User();
     }
 
     /**

@@ -10,6 +10,7 @@ namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
+use Ndrx\Profiler\Renderer\RendererInterface;
 
 abstract class Response extends Collector implements FinalCollectorInterface
 {
@@ -55,6 +56,16 @@ abstract class Response extends Collector implements FinalCollectorInterface
         return [
             'status', 'charset', 'maxAge', 'expires', 'lastModified', 'ttl'
         ];
+    }
+
+    /**
+     * @return RendererInterface
+     *
+     * @throws \RuntimeException
+     */
+    public function getRenderer()
+    {
+        return new \Ndrx\Profiler\Renderer\Html\Data\Response();
     }
 
     /**

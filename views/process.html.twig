@@ -1,0 +1,21 @@
+{% extends 'app.html.twig' %}
+
+{% block content %}
+    <div class="ui left demo vertical inverted sidebar labeled icon menu visible">
+        {% for name, collector in collectors %}
+            <a href="#{{ name }}" class="item tab-collector-menu" data-tab-id="tab-{{ name }}">
+                <i class="{{ collector.icon }} icon"></i>
+                {{ collector.title }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="pusher dimmed">
+        {% for name, collector in collectors %}
+            <div id="tab-{{ name }}" class="tab-collector">
+                <div class="ui huge header">{{ collector.title }}</div>
+                {{ collector.content | raw }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

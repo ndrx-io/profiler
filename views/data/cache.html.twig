@@ -1,0 +1,37 @@
+<table class="ui celled striped table">
+    <thead>
+    <tr>
+        <th>Action</th>
+        <th>Key</th>
+        <th>Value</th>
+        <th>Result</th>
+        <th>Lifetime</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for cache in value[0] %}
+        <tr {% if not success %}class="warning"{% endif %}>
+            <td>
+                {{ cache.action }}
+            </td>
+            <td>
+                {{ cache.key }}
+            </td>
+            <td>
+                {{ cache.value | json_encode }}
+            </td>
+            <td>
+                {{ cache.result | json_encode }}
+            </td>
+            <td>
+                {{ cache.lifetime }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="5">{{ value | length }} actions</th>
+    </tr>
+    </tfoot>
+</table>

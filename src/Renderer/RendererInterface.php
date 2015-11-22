@@ -11,7 +11,7 @@ interface RendererInterface
     /**
      * @return mixed
      */
-    public function render();
+    public function content();
 
     /**
      * @return mixed
@@ -27,6 +27,12 @@ interface RendererInterface
      * @return mixed
      */
     public function getData();
+
+    /**
+     * @param array $data
+     * @return self
+     */
+    public function setData(array $data);
 
     /**
      * @return string
