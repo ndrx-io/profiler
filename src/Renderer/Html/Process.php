@@ -52,11 +52,11 @@ class Process extends Renderer
                 $data = [
                     'value' => null
                 ];
-                if (array_key_exists($collector->getName(), $this->profile)) {
+                if (array_key_exists($collector->getPath(), $this->profile)) {
                     $data['value'] = $this->profile[$collector->getPath()];
                 }
 
-                $collectors[$collector->getPath()] = $collector->getRenderer()->setData($data);
+                $collectors[$collector->getName()] = $collector->getRenderer()->setData($data);
             }
         }
 

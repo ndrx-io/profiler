@@ -31,7 +31,7 @@ abstract class Route extends Collector implements StartCollectorInterface
      */
     public function getPath()
     {
-        return 'routes';
+        return 'route';
     }
 
     public function getDataFields()

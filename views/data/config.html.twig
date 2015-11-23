@@ -1,1 +1,4 @@
-{{ value | json_encode }}
+{% import "macro.html.twig" as macros %}
+
+{{ macros.recursiveKeyValue(value) }}
+

@@ -1,1 +1,22 @@
-{{ value | json_encode }}
+<table class="ui striped table">
+    <thead>
+    <tr>
+        <th>Method</th>
+        <th>Uri</th>
+        <th>Name</th>
+        <th>Action</th>
+        <th>Middleware</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for route in value %}
+        <tr>
+            <td>{{ route.method }}</td>
+            <td>{{ route.uri }}</td>
+            <td>{{ route.name }}</td>
+            <td>{{ route.action }}</td>
+            <td>{{ route.middleware }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

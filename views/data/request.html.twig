@@ -1,3 +1,5 @@
+{% import "macro.html.twig" as macros %}
+
 <table class="ui very basic table">
     <tbody>
     <tr>
@@ -76,50 +78,16 @@
 </table>
 
 <h2>Get ({{ value.data.get | length }})</h2>
-<table class="ui very basic table">
-    <tbody>
-    {% for key, item in value.data.get %}
-        <tr>
-            <td>{{ key }}</td>
-            <td>{{ item | json_encode }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+
+{{ macros.recursiveKeyValue(value.data.get) }}
+
 
 <h2>Post ({{ value.data.post | length }})</h2>
-<table class="ui very basic table">
-    <tbody>
-    {% for key, item in value.data.post %}
-        <tr>
-            <td>{{ key }}</td>
-            <td>{{ item | json_encode }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{{ macros.recursiveKeyValue(value.data.post) }}
 
 <h2>Session ({{ value.session | length }})</h2>
-<table class="ui very basic table">
-    <tbody>
-    {% for key, item in value.session %}
-        <tr>
-            <td>{{ key }}</td>
-            <td>{{ item | json_encode }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{{ macros.recursiveKeyValue(value.session) }}
 
 
 <h2>Cookies ({{ value.cookies | length }})</h2>
-<table class="ui very basic table">
-    <tbody>
-    {% for key, item in value.cookies %}
-        <tr>
-            <td>{{ key }}</td>
-            <td>{{ item | json_encode }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{{ macros.recursiveKeyValue(value.cookies) }}

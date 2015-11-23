@@ -1,1 +1,5 @@
-{{ value | json_encode }}
+<div class="ui list">
+    {% for file in value %}
+        <div class="item">{{ file }}</div>
+    {% endfor %}
+</div>
