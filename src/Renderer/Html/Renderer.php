@@ -57,8 +57,6 @@ abstract class Renderer implements RendererInterface
         return $this;
     }
 
-
-
     public function getTemplateFolder()
     {
         return __DIR__ . DIRECTORY_SEPARATOR . '..'

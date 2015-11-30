@@ -1,1 +1,18 @@
-{{ value | json_encode }}
+<table class="ui striped table">
+    <thead>
+    <tr>
+        <th>Connection</th>
+        <th>Duration</th>
+        <th>Query</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for query in value %}
+        <tr>
+            <td class="collapsing">{{ query.connection }}</td>
+            <td class="collapsing">{{ query.duration }}</td>
+            <td>{{ query.bindQuery }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

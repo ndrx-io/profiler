@@ -4,6 +4,7 @@ namespace Ndrx\Profiler\Controllers;
 
 use Ndrx\Profiler\ProfilerInterface;
 use Ndrx\Profiler\Renderer\Html\Process;
+use Ndrx\Profiler\Renderer\Html\ProcessList;
 
 /**
  * Created by PhpStorm.
@@ -29,9 +30,12 @@ class Web
     }
 
 
-    public function index()
+    public function index($offset = 0, $limit = 20)
     {
+        $profiles = $this->profiler->getDatasource()->all($offset, $limit);
+        $renderer = new ProcessList($profiles);
 
+        return $renderer->content();
     }
 
     public function show($id)

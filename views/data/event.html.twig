@@ -1,1 +1,29 @@
-{{ value | json_encode }}
+<table class="ui striped table">
+    <thead>
+    <tr>
+        <th>time</th>
+        <th>Name</th>
+        <th>Parameters</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for event in value %}
+        <tr>
+            <td>
+                {{ event[0].time }}
+            </td>
+            <td class="collapsing">{{ event[0].name }}</td>
+            <td>
+                <pre>
+                    {{ event[0].param | json_encode }}
+                </pre>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="5">{{ value | length }} actions</th>
+    </tr>
+    </tfoot>
+</table>

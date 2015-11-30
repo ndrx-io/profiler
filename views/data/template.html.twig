@@ -1,1 +1,26 @@
-{{ value | json_encode }}
+
+<table class="ui striped table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Parameters</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for template in value %}
+        <tr>
+            <td class="collapsing">{{ template[0].name }}</td>
+            <td>
+                <pre>
+                    {{ template[0].data | json_encode }}
+                </pre>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="5">{{ value | length }} actions</th>
+    </tr>
+    </tfoot>
+</table>
