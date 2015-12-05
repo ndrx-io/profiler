@@ -11,9 +11,10 @@ namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\Collectors\StreamCollector;
+use Ndrx\Profiler\Renderer\BarRenderableInterface;
 use Ndrx\Profiler\Renderer\RendererInterface;
 
-abstract class Database extends StreamCollector implements StreamCollectorInterface
+abstract class Database extends StreamCollector implements StreamCollectorInterface, BarRenderableInterface
 {
     /**
      * The path in the final json

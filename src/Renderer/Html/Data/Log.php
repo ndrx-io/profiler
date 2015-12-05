@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Log extends Collector
+use Ndrx\Profiler\Renderer\Html\BarInterface;
+
+class Log extends Collector implements BarInterface
 {
     /**
      * @return string
@@ -17,5 +19,21 @@ class Log extends Collector
     public function getTitle()
     {
         return 'Log';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        return $this->getTitle() . sprintf('(%s)', count($this->getData()));
+    }
+
+    /**
+     * @return string
+     */
+    public function getBarContent()
+    {
+        return false;
     }
 }

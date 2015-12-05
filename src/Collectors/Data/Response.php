@@ -10,9 +10,10 @@ namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
+use Ndrx\Profiler\Renderer\BarRenderableInterface;
 use Ndrx\Profiler\Renderer\RendererInterface;
 
-abstract class Response extends Collector implements FinalCollectorInterface
+abstract class Response extends Collector implements FinalCollectorInterface, BarRenderableInterface
 {
 
     /**

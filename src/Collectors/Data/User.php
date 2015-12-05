@@ -12,9 +12,10 @@ namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
+use Ndrx\Profiler\Renderer\BarRenderableInterface;
 use Ndrx\Profiler\Renderer\RendererInterface;
 
-abstract class User extends Collector implements StartCollectorInterface
+abstract class User extends Collector implements StartCollectorInterface, BarRenderableInterface
 {
     protected $user;
 

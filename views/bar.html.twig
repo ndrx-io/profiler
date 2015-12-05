@@ -1,0 +1,10 @@
+<div class="ui top  sidebar labeled icon menu visible small profiler-bar">
+    {% for name, collector in collectors %}
+            <a href="#{{ name }}" class="item tab-collector-menu" data-tab-id="tab-{{ name }}">
+                <i class="{{ collector.icon }} icon"></i>
+                {{ collector.badge }}
+                {{ collector.title }}
+                {{ collector.content | raw }}
+            </a>
+    {% endfor %}
+</div>

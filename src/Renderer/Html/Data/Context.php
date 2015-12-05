@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Context extends Collector
+use Ndrx\Profiler\Renderer\Html\BarInterface;
+
+class Context extends Collector implements BarInterface
 {
     /**
      * @return string
@@ -17,5 +19,25 @@ class Context extends Collector
     public function getTitle()
     {
         return 'Context';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        if (empty($this->profile['value'])) {
+            return '-';
+        }
+
+        return  $this->profile['value']['environment'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getBarContent()
+    {
+        return false;
     }
 }

@@ -61,7 +61,9 @@ class Process extends Renderer
         }
 
         return [
-            'collectors' => $collectors
+            'collectors' => $collectors,
+            // build the bar
+            'bar' => (new Bar($this->profile, $this->profiler))
         ];
     }
 

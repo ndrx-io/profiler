@@ -12,9 +12,10 @@ namespace Ndrx\Profiler\Collectors\Data;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\Collectors\StreamCollector;
 use Ndrx\Profiler\JsonPatch;
+use Ndrx\Profiler\Renderer\BarRenderableInterface;
 use Ndrx\Profiler\Renderer\RendererInterface;
 
-abstract class Cache extends StreamCollector implements StreamCollectorInterface
+abstract class Cache extends StreamCollector implements StreamCollectorInterface, BarRenderableInterface
 {
     /**
      * Write data in the datasource and clean current buffer

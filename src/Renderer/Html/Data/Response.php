@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Response extends Collector
+use Ndrx\Profiler\Renderer\Html\BarInterface;
+
+class Response extends Collector implements BarInterface
 {
     /**
      * @return string
@@ -17,5 +19,26 @@ class Response extends Collector
     public function getTitle()
     {
         return 'Response';
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        if (empty($this->profile['value'])) {
+            return '-';
+        }
+
+        return $this->profile['value']['status']['code'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getBarContent()
+    {
+        return false;
     }
 }

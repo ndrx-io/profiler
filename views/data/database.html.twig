@@ -7,10 +7,10 @@
     </tr>
     </thead>
     <tbody>
-    {% for query in value %}
+    {% for query in value[0] %}
         <tr>
             <td class="collapsing">{{ query.connection }}</td>
-            <td class="collapsing">{{ query.duration }}</td>
+            <td class="collapsing">{{ query.duration }}ms</td>
             <td>{{ query.bindQuery }}</td>
         </tr>
     {% endfor %}

@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Cache extends Collector
+use Ndrx\Profiler\Renderer\Html\BarInterface;
+
+class Cache extends Collector implements BarInterface
 {
     /**
      * @return string
@@ -17,5 +19,25 @@ class Cache extends Collector
     public function getTitle()
     {
         return 'Cache';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        if (empty($this->profile['value'])) {
+            return '-';
+        }
+
+        return  sprintf('%s (%s)', $this->getTitle(), count($this->profile['value']));
+    }
+
+    /**
+     * @return string
+     */
+    public function getBarContent()
+    {
+        return false;
     }
 }
