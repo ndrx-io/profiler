@@ -2,6 +2,7 @@
 
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
+use Ndrx\Profiler\Renderer\Html\BarInterface;
 use Ndrx\Profiler\Renderer\Html\Renderer;
 
 /**
@@ -10,7 +11,7 @@ use Ndrx\Profiler\Renderer\Html\Renderer;
  * Date: 21/11/15
  * Time: 18:35
  */
-class PhpVersion extends Renderer
+class PhpVersion extends Renderer implements BarInterface
 {
 
     /**
@@ -35,5 +36,21 @@ class PhpVersion extends Renderer
     public function getTitle()
     {
         return 'Php version';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        return 'Php';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBarContent()
+    {
+        return $this->profile['value'];
     }
 }

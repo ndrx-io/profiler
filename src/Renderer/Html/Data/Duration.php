@@ -41,4 +41,9 @@ class Duration extends Collector implements BarInterface
     {
         return false;
     }
+
+    public function getIcon()
+    {
+        return 'fa-clock-o';
+    }
 }

@@ -64,6 +64,7 @@ class Bar extends Renderer
                         'icon' => $renderer->getIcon(),
                         'badge' => $renderer->getBadge(),
                         'content' => $renderer->getBarContent(),
+                        'title' => $renderer->getTitle()
                     ];
 
                     $collectors[$collector->getName()] = $data;

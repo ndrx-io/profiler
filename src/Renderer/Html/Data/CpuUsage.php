@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class CpuUsage extends Collector
+use Ndrx\Profiler\Renderer\Html\BarInterface;
+
+class CpuUsage extends Collector implements BarInterface
 {
     /**
      * @return string
@@ -17,5 +19,30 @@ class CpuUsage extends Collector
     public function getTitle()
     {
         return 'CpuUsage';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        if (empty($this->profile['value'])) {
+            return '-';
+        }
+
+        return round($this->profile['value'] / 1000, 3) . 'ms';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBarContent()
+    {
+        return false;
+    }
+
+    public function getIcon()
+    {
+        return 'fa-heartbeat';
     }
 }

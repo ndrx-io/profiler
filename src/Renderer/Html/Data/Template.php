@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Template extends Collector
+use Ndrx\Profiler\Renderer\Html\PageInterface;
+
+class Template extends Collector implements PageInterface
 {
     /**
      * @return string
@@ -17,5 +19,10 @@ class Template extends Collector
     public function getTitle()
     {
         return 'Template';
+    }
+
+    public function getIcon()
+    {
+        return 'fa-file-code-o';
     }
 }

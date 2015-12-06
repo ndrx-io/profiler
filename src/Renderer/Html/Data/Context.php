@@ -10,8 +10,9 @@ namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
 use Ndrx\Profiler\Renderer\Html\BarInterface;
+use Ndrx\Profiler\Renderer\Html\PageInterface;
 
-class Context extends Collector implements BarInterface
+class Context extends Collector implements BarInterface, PageInterface
 {
     /**
      * @return string
@@ -39,5 +40,10 @@ class Context extends Collector implements BarInterface
     public function getBarContent()
     {
         return false;
+    }
+
+    public function getIcon()
+    {
+        return 'fa-compass';
     }
 }

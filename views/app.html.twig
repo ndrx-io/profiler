@@ -1,40 +1,55 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
-        <style>
-            .ui.visible.left.sidebar ~ .fixed,
-            .ui.visible.left.sidebar ~ .pusher {
-                transform: translate3d(120px, 0px, 0px);
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
+    <style>
+        .ui.visible.left.sidebar ~ .fixed,
+        .ui.visible.left.sidebar ~ .pusher {
+            transform: translate3d(120px, 0px, 0px);
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            $('.tab-collector').hide();
+            $('.item--popup').popup({
+                inline: true,
+                hoverable: true,
+                position: 'top center',
+                delay: {
+                    show: 300,
+                    hide: 800
+                }
+            });
+
+            var hash = window.location.hash.substring(1);
+            if (hash.length > 0) {
+                $('#tab-' + hash).show();
+                $('*[data-tab-id="tab-' + hash + '"]').addClass('active');
+            } else {
+                $('.tab-collector:first').show();
+                $('.tab-collector-menu:first').addClass('active');
             }
-        </style>
-        <script>
-            $(document).ready(function() {
 
-                $('.tab-collector').hide();
+            $('.tab-collector-menu').click(function () {
+                var tabElement = $('#' + $(this).data('tabId'));
 
-
-                var hash = window.location.hash.substring(1);
-                if(hash.length > 0) {
-                    $('#tab-' + hash).show();
-                    $('*[data-tab-id="tab-' + hash + '"]').addClass('active');
-                } else {
-                    $('.tab-collector:first').show();
-                    $('.tab-collector-menu:first').addClass('active');
+                if(tabElement.length === 0) {
+                    return false;
                 }
 
-                $('.tab-collector-menu').click(function() {
-                    $('.tab-collector').hide();
-                    $('.tab-collector-menu').removeClass('active');
-                    $(this).addClass('active');
-                    $('#' + $(this).data('tabId')).show();
-                });
+                $('.tab-collector').hide();
+                $('.tab-collector-menu').removeClass('active');
+                $(this).addClass('active');
+                tabElement.show();
             });
-        </script>
-    </head>
-    <body>
-        {% block content %}
-        {% endblock %}
-    </body>
+        });
+    </script>
+</head>
+<body>
+{% block content %}
+{% endblock %}
+</body>
 </html>

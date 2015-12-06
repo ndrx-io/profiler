@@ -8,11 +8,10 @@
                 {{ collector.title }}
             </a>
         {% endfor %}
+        <div style="min-height: 80px"></div>
     </div>
 
     <div class="pusher dimmed">
-        {{ bar.content | raw }}
-
         <div class="content" style="padding-top: 60px">
             {% for name, collector in collectors %}
                 <div id="tab-{{ name }}" class="tab-collector">
@@ -21,13 +20,9 @@
                 </div>
             {% endfor %}
         </div>
-
     </div>
 
+    <div style="min-height: 80px"></div>
 
-    <style>
-        .profiler-bar {
-            left: -13px !important;
-        }
-    </style>
+    {{ bar.content | raw }}
 {% endblock %}

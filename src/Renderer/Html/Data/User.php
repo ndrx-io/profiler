@@ -10,8 +10,9 @@ namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
 use Ndrx\Profiler\Renderer\Html\BarInterface;
+use Ndrx\Profiler\Renderer\Html\PageInterface;
 
-class User extends Collector implements BarInterface
+class User extends Collector implements BarInterface, PageInterface
 {
     /**
      * @return string
@@ -40,5 +41,10 @@ class User extends Collector implements BarInterface
     public function getBarContent()
     {
         return false;
+    }
+
+    public function getIcon()
+    {
+        return 'fa-user';
     }
 }

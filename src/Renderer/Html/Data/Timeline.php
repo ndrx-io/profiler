@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Timeline extends Collector
+use Ndrx\Profiler\Renderer\Html\PageInterface;
+
+class Timeline extends Collector implements PageInterface
 {
     /**
      * @return string
@@ -51,5 +53,10 @@ class Timeline extends Collector
         }
 
         return $data;
+    }
+
+    public function getIcon()
+    {
+        return 'fa-play';
     }
 }

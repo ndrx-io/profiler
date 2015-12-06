@@ -9,7 +9,10 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Config extends Collector
+use Ndrx\Profiler\Renderer\Html\BarInterface;
+use Ndrx\Profiler\Renderer\Html\PageInterface;
+
+class Config extends Collector implements PageInterface, BarInterface
 {
     /**
      * @return string
@@ -17,5 +20,21 @@ class Config extends Collector
     public function getTitle()
     {
         return 'Config';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        // TODO: Implement getBadge() method.
+    }
+
+    /**
+     * @return string
+     */
+    public function getBarContent()
+    {
+        return false;
     }
 }

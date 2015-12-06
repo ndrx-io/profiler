@@ -49,6 +49,12 @@ class Process extends Renderer
         $dataCollectors = call_user_func_array('array_merge', $dataCollectors);
         foreach ($dataCollectors as $collector) {
             if ($collector instanceof RenderableInterface) {
+                $renderer = $collector->getRenderer();
+
+                if (!$renderer instanceof PageInterface) {
+                    continue;
+                }
+
                 $data = [
                     'value' => null
                 ];
@@ -56,7 +62,7 @@ class Process extends Renderer
                     $data['value'] = $this->profile[$collector->getPath()];
                 }
 
-                $collectors[$collector->getName()] = $collector->getRenderer()->setData($data);
+                $collectors[$collector->getName()] = $renderer->setData($data);
             }
         }
 

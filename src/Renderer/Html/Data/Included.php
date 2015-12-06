@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Included extends Collector
+use Ndrx\Profiler\Renderer\Html\PageInterface;
+
+class Included extends Collector implements PageInterface
 {
     /**
      * @return string
@@ -17,5 +19,10 @@ class Included extends Collector
     public function getTitle()
     {
         return 'Included';
+    }
+
+    public function getIcon()
+    {
+        return 'fa-file';
     }
 }

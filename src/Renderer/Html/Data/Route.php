@@ -9,7 +9,9 @@
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
 
-class Route extends Collector
+use Ndrx\Profiler\Renderer\Html\PageInterface;
+
+class Route extends Collector implements PageInterface
 {
     /**
      * @return string
@@ -17,5 +19,10 @@ class Route extends Collector
     public function getTitle()
     {
         return 'Route';
+    }
+
+    public function getIcon()
+    {
+        return 'fa-road';
     }
 }
