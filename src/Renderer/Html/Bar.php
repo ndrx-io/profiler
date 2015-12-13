@@ -10,6 +10,7 @@ namespace Ndrx\Profiler\Renderer\Html;
 
 use Ndrx\Profiler\ProfilerInterface;
 use Ndrx\Profiler\Renderer\RenderableInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class Bar extends Renderer
 {
@@ -72,8 +73,11 @@ class Bar extends Renderer
             }
         }
 
+        $currenturl = Request::createFromGlobals()->getUri();
+
         return [
-            'collectors' => $collectors
+            'collectors' => $collectors,
+            'profileUrl' => str_replace('bar/', '', $currenturl)
         ];
     }
 

@@ -19,7 +19,7 @@ class PhpVersion extends Renderer implements BarInterface
      */
     public function getTemplate()
     {
-        return 'data' . DIRECTORY_SEPARATOR . 'php-version.html.twig';
+        return 'bar' . DIRECTORY_SEPARATOR . 'php-version.html.twig';
     }
 
     /**

@@ -35,7 +35,7 @@ class Log extends Collector implements BarInterface, PageInterface
      */
     public function getBarContent()
     {
-        return false;
+        return json_encode($this->getData());
     }
 
     public function getIcon()

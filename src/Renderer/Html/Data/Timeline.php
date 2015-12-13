@@ -27,13 +27,16 @@ class Timeline extends Collector implements PageInterface
         $data = $this->profile;
         $min = false;
         $max = false;
+
         foreach ($data['value'] as $key => $item) {
             if (is_bool($min) || $item['start'] < $min) {
                 $min = $item['start'];
             }
 
-            if (is_bool($max) || $item['end'] > $max) {
-                $max = $item['end'];
+            if (array_key_exists('end', $item)) {
+                if (is_bool($max) || $item['end'] > $max) {
+                    $max = $item['end'];
+                }
             }
         }
 
@@ -48,6 +51,9 @@ class Timeline extends Collector implements PageInterface
 
 
         foreach ($data['value'] as $key => $item) {
+            if (!array_key_exists('end', $item)) {
+                $item['end'] = $max;
+            }
             $data['value'][$key]['offset'] = floor((($item['start'] - $min) / $min) * 100);
             $data['value'][$key]['length'] = floor((($item['end'] - $item['start']) / ($max - $min)) * 100);
         }

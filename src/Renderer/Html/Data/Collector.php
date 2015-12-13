@@ -24,7 +24,7 @@ abstract class Collector extends Renderer
             return $a[1] . '-' . strtolower($a[2]);
         }, $reflectionClassName->getShortName()));
 
-        return 'data' . DIRECTORY_SEPARATOR . $name . '.html.twig';
+        return 'tab' . DIRECTORY_SEPARATOR . $name . '.html.twig';
     }
 
     /**

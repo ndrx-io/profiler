@@ -1,14 +1,16 @@
 <div class="profiler-bar ui menu " style="display: none">
     {% for name, collector in collectors %}
         {% set content = collector.content | raw %}
-        <a href="#{{ name }}"
+        <a href="{% if not content is empty %}{{ profileUrl }}{% endif %}#{{ name }}"
            class="item tab-collector-menu ui {% if content %}item--popup {% endif %}"
-           data-tab-id="tab-{{ name }}">
+           data-tab-id="tab-{{ name }}"
+           {% if not content %}target="_blank"{% endif %}
+        >
             <i class="{{ collector.icon }} icon"></i>
             {{ collector.badge }}
         </a>
 
-        {% if content %}
+        {% if not content is empty %}
             <div class="ui flowing popup top left transition hidden">
                 <div class="ui three column divided center aligned grid">
                     <strong>{{ collector.title }}</strong>

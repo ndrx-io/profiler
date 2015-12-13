@@ -31,7 +31,6 @@ abstract class Renderer implements RendererInterface
 
     }
 
-
     /**
      * @return string
      */

@@ -3,6 +3,7 @@
 namespace Ndrx\Profiler\Controllers;
 
 use Ndrx\Profiler\ProfilerInterface;
+use Ndrx\Profiler\Renderer\Html\Bar as BarRenderer;
 use Ndrx\Profiler\Renderer\Html\Process;
 use Ndrx\Profiler\Renderer\Html\ProcessList;
 
@@ -12,7 +13,7 @@ use Ndrx\Profiler\Renderer\Html\ProcessList;
  * Date: 21/11/15
  * Time: 17:16
  */
-class Web
+class Bar
 {
 
     /**
@@ -29,18 +30,12 @@ class Web
         $this->profiler = $profiler;
     }
 
-
     /**
-     * @param int $offset
-     * @param int $limit
-     * @return string
+     *
      */
-    public function index($offset = 0, $limit = 20)
+    public function index()
     {
-        $profiles = $this->profiler->getDatasource()->all($offset, $limit);
-        $renderer = new ProcessList($profiles);
 
-        return $renderer->content();
     }
 
     /**
@@ -50,7 +45,7 @@ class Web
     public function show($id)
     {
         $profile = $this->objectToArray($this->profiler->getProfile($id));
-        $renderer = new Process($profile, $this->profiler);
+        $renderer = new BarRenderer ($profile, $this->profiler);
 
         return $renderer->content();
     }
