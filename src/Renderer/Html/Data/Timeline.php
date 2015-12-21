@@ -25,6 +25,11 @@ class Timeline extends Collector implements PageInterface
     public function getData()
     {
         $data = $this->profile;
+
+        if (!array_key_exists('value', $data)) {
+            return [];
+        }
+
         $min = false;
         $max = false;
 

@@ -4,7 +4,7 @@ namespace Ndrx\Profiler\Test\Renderer\Html\Data;
 
 use Ndrx\Profiler\DataSources\File;
 use Ndrx\Profiler\ProfilerFactory;
-use Ndrx\Profiler\Renderer\Html\Data\Cache;
+use Ndrx\Profiler\Renderer\Html\Data\Config;
 
 
 /**
@@ -13,7 +13,7 @@ use Ndrx\Profiler\Renderer\Html\Data\Cache;
  * Date: 07/12/2015
  * Time: 20:11
  */
-class CacheTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testNoData()
@@ -24,7 +24,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
             ProfilerFactory::OPTION_DATASOURCE_PROFILES_FOLDER => '/tmp'
         ]);
 
-        $renderer = new Cache([], $profiler);
+        $renderer = new Config([], $profiler);
 
         $this->assertFalse($renderer->getBarContent());
         $this->assertInternalType('array', $renderer->getData());
@@ -32,9 +32,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($renderer->getTitle());
         $this->assertEmpty($renderer->getBarContent());
         $this->assertEquals('-', $renderer->getBadge());
-        $this->assertNotEmpty($renderer->getIcon());
-        $this->assertNotEmpty($renderer->getTitle());
-        $this->assertEmpty($renderer->getBarContent());
         $this->assertNotEmpty($renderer->content());
     }
 
@@ -47,15 +44,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase
             ProfilerFactory::OPTION_DATASOURCE_PROFILES_FOLDER => '/tmp'
         ]);
 
-        $renderer = new Cache([
+        $renderer = new Config([
             "value" => [
                 [
-                    'action' => 'GET',
                     'value' => 'XXX',
-                    'lifetime' => 100,
-                    'key' => 'bwa',
-                    'result' => 'XXX',
-                    'success' => true,
                 ]
             ]
         ], $profiler);
@@ -65,8 +57,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($renderer->getData());
         $this->assertNotEmpty($renderer->getTitle());
         $this->assertEmpty($renderer->getBarContent());
-        $this->assertEquals('Cache (1)', $renderer->getBadge());
-        $this->assertNotEmpty($renderer->getIcon());
+        $this->assertEquals('-', $renderer->getBadge());
         $this->assertNotEmpty($renderer->content());
     }
 }

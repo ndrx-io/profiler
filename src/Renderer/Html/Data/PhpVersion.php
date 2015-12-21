@@ -43,7 +43,7 @@ class PhpVersion extends Renderer implements BarInterface
      */
     public function getBadge()
     {
-        return 'Php';
+        return 'PHP';
     }
 
     /**
@@ -51,6 +51,10 @@ class PhpVersion extends Renderer implements BarInterface
      */
     public function getBarContent()
     {
-        return $this->profile['value'];
+        if(array_key_exists('value', $this->profile)) {
+            return $this->profile['value'];
+        }
+
+        return '-';
     }
 }

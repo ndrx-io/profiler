@@ -31,7 +31,7 @@ class Context extends Collector implements BarInterface, PageInterface
             return '-';
         }
 
-        return  $this->profile['value']['environment'];
+        return $this->profile['value']['environment'];
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Ndrx\Profiler\Test\Renderer\Html\Data;
 
 use Ndrx\Profiler\DataSources\File;
 use Ndrx\Profiler\ProfilerFactory;
-use Ndrx\Profiler\Renderer\Html\Data\Cache;
+use Ndrx\Profiler\Renderer\Html\Data\PhpVersion;
 
 
 /**
@@ -13,7 +13,7 @@ use Ndrx\Profiler\Renderer\Html\Data\Cache;
  * Date: 07/12/2015
  * Time: 20:11
  */
-class CacheTest extends \PHPUnit_Framework_TestCase
+class PhpVersionTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testNoData()
@@ -24,18 +24,16 @@ class CacheTest extends \PHPUnit_Framework_TestCase
             ProfilerFactory::OPTION_DATASOURCE_PROFILES_FOLDER => '/tmp'
         ]);
 
-        $renderer = new Cache([], $profiler);
+        $renderer = new PhpVersion([], $profiler);
 
-        $this->assertFalse($renderer->getBarContent());
+        $this->assertEquals('-', $renderer->getBarContent());
         $this->assertInternalType('array', $renderer->getData());
         $this->assertEmpty($renderer->getData());
         $this->assertNotEmpty($renderer->getTitle());
-        $this->assertEmpty($renderer->getBarContent());
-        $this->assertEquals('-', $renderer->getBadge());
+        $this->assertEquals('PHP', $renderer->getBadge());
         $this->assertNotEmpty($renderer->getIcon());
-        $this->assertNotEmpty($renderer->getTitle());
-        $this->assertEmpty($renderer->getBarContent());
-        $this->assertNotEmpty($renderer->content());
+        $this->assertEquals('bar/php-version.html.twig', $renderer->getTemplate());
+
     }
 
 
@@ -47,26 +45,15 @@ class CacheTest extends \PHPUnit_Framework_TestCase
             ProfilerFactory::OPTION_DATASOURCE_PROFILES_FOLDER => '/tmp'
         ]);
 
-        $renderer = new Cache([
-            "value" => [
-                [
-                    'action' => 'GET',
-                    'value' => 'XXX',
-                    'lifetime' => 100,
-                    'key' => 'bwa',
-                    'result' => 'XXX',
-                    'success' => true,
-                ]
-            ]
+        $renderer = new PhpVersion([
+            "value" => 'PHP 5.6 Foo-bar',
         ], $profiler);
 
-        $this->assertFalse($renderer->getBarContent());
+        $this->assertEquals('PHP 5.6 Foo-bar', $renderer->getBarContent());
         $this->assertInternalType('array', $renderer->getData());
         $this->assertNotEmpty($renderer->getData());
         $this->assertNotEmpty($renderer->getTitle());
-        $this->assertEmpty($renderer->getBarContent());
-        $this->assertEquals('Cache (1)', $renderer->getBadge());
+        $this->assertEquals('PHP', $renderer->getBadge());
         $this->assertNotEmpty($renderer->getIcon());
-        $this->assertNotEmpty($renderer->content());
     }
 }

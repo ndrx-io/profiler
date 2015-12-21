@@ -27,7 +27,7 @@ class Log extends Collector implements BarInterface, PageInterface
      */
     public function getBadge()
     {
-        return $this->getTitle() . sprintf('(%s)', count($this->getData()));
+        return sprintf('%s (%s)', $this->getTitle(), count($this->getData()));
     }
 
     /**

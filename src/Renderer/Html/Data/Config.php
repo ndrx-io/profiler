@@ -27,7 +27,7 @@ class Config extends Collector implements PageInterface, BarInterface
      */
     public function getBadge()
     {
-        // TODO: Implement getBadge() method.
+        return '-';
     }
 
     /**

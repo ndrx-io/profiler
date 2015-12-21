@@ -32,7 +32,7 @@ class User extends Collector implements BarInterface, PageInterface
             return '-';
         }
 
-        return $this->profile['identifier'];
+        return $this->profile['value']['identifier'];
     }
 
     /**
