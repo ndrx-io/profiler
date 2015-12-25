@@ -26,7 +26,7 @@ class Timeline extends Collector implements PageInterface
     {
         $data = $this->profile;
 
-        if (!array_key_exists('value', $data)) {
+        if (!array_key_exists('value', $data) || !is_array($data['value'])) {
             return [];
         }
 

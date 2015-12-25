@@ -69,4 +69,32 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($renderer->getIcon());
         $this->assertNotEmpty($renderer->content());
     }
+
+
+    public function testSetData()
+    {
+        $profiler = ProfilerFactory::build([
+            ProfilerFactory::OPTION_ENABLE => true,
+            ProfilerFactory::OPTION_DATASOURCE_CLASS => File::class,
+            ProfilerFactory::OPTION_DATASOURCE_PROFILES_FOLDER => '/tmp'
+        ]);
+
+        $renderer = new Cache([], $profiler);
+
+        $renderer->setData([
+            "value" => [
+                [
+                    'action' => 'GET',
+                    'value' => 'XXX',
+                    'lifetime' => 100,
+                    'key' => 'bwa',
+                    'result' => 'XXX',
+                    'success' => true,
+                ]
+            ]
+        ]);
+
+        $this->assertEquals('GET', $renderer->getData()['value'][0]['action']);
+        $this->assertEquals('XXX', $renderer->getData()['value'][0]['value']);
+    }
 }
