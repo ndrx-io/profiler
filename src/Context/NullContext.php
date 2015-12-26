@@ -4,7 +4,6 @@ namespace Ndrx\Profiler\Context;
 
 use Ndrx\Profiler\Process;
 
-
 /**
  * Created by PhpStorm.
  * User: arnaud

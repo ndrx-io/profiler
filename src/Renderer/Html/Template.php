@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Renderer\Html;
 
-
 class Template
 {
 

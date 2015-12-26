@@ -8,7 +8,6 @@
 
 namespace Ndrx\Profiler\Renderer\Html\Data;
 
-
 use Ndrx\Profiler\Renderer\Html\PageInterface;
 
 class Included extends Collector implements PageInterface

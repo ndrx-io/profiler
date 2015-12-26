@@ -51,7 +51,6 @@ class File implements DataSourceInterface
      */
     public function getProcess($processId)
     {
-
         $finder = new Finder();
         $iterator = $finder
             ->name('*.json')

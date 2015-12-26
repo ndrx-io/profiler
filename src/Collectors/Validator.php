@@ -23,7 +23,7 @@ class Validator
      */
     protected $optionResolver;
 
-    public function __construct(array $required, array $defaults = array())
+    public function __construct(array $required)
     {
         $this->optionResolver = new OptionsResolver();
         $this->optionResolver->setDefaults(array_fill_keys($required, null));

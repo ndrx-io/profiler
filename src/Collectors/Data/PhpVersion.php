@@ -11,7 +11,6 @@ namespace Ndrx\Profiler\Collectors\Data;
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 use Ndrx\Profiler\Renderer\BarRenderableInterface;
-use Ndrx\Profiler\Renderer\RenderableInterface;
 
 class PhpVersion extends Collector implements StartCollectorInterface, BarRenderableInterface
 {
@@ -26,7 +25,7 @@ class PhpVersion extends Collector implements StartCollectorInterface, BarRender
 
     public function validate()
     {
-        if(!is_string($this->data)) {
+        if (!is_string($this->data)) {
             throw new \LogicException('Duration must be a string ' . json_encode($this->data) . ' given');
         }
     }

@@ -4,8 +4,6 @@ namespace Ndrx\Profiler\Controllers;
 
 use Ndrx\Profiler\ProfilerInterface;
 use Ndrx\Profiler\Renderer\Html\Bar as BarRenderer;
-use Ndrx\Profiler\Renderer\Html\Process;
-use Ndrx\Profiler\Renderer\Html\ProcessList;
 
 /**
  * Created by PhpStorm.
@@ -38,7 +36,7 @@ class Bar
     public function show($id)
     {
         $profile = $this->objectToArray($this->profiler->getProfile($id));
-        $renderer = new BarRenderer ($profile, $this->profiler);
+        $renderer = new BarRenderer($profile, $this->profiler);
 
         return $renderer->content();
     }

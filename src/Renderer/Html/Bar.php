@@ -43,7 +43,6 @@ class Bar extends Renderer
      */
     public function getData()
     {
-
         $collectors = [];
 
         $dataCollectors = $this->profiler->getCollectors();

@@ -10,9 +10,6 @@ namespace Ndrx\Profiler\Collectors\Data;
 
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
-use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
-use Ndrx\Profiler\JsonPatch;
-use Ndrx\Profiler\Process;
 
 class Included extends Collector implements FinalCollectorInterface
 {
@@ -35,7 +32,7 @@ class Included extends Collector implements FinalCollectorInterface
 
     public function validate()
     {
-        if(!is_array($this->data)) {
+        if (!is_array($this->data)) {
             throw new \LogicException('Duration must be an array ' . json_encode($this->data) . ' given');
         }
     }

@@ -142,7 +142,6 @@ class NullProfiler implements ProfilerInterface
      */
     public function getContext()
     {
-
         return new NullContext();
     }
 
