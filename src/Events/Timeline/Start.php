@@ -75,7 +75,7 @@ class Start extends Event
     }
 
     /**
-     * @return float
+     * @return integer
      */
     public function getTimestamp()
     {
