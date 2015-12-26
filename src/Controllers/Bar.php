@@ -30,13 +30,6 @@ class Bar
         $this->profiler = $profiler;
     }
 
-    /**
-     *
-     */
-    public function index()
-    {
-
-    }
 
     /**
      * @param $id
