@@ -51,7 +51,7 @@ class PhpVersion extends Renderer implements BarInterface
      */
     public function getBarContent()
     {
-        if(array_key_exists('value', $this->profile)) {
+        if (array_key_exists('value', $this->profile)) {
             return $this->profile['value'];
         }
 

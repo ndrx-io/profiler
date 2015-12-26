@@ -8,9 +8,6 @@
 
 namespace Ndrx\Profiler\Renderer\Html;
 
-use Ndrx\Profiler\ProfilerInterface;
-use Ndrx\Profiler\Renderer\RenderableInterface;
-
 class ProcessList extends Renderer
 {
     /**

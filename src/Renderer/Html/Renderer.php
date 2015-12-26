@@ -28,7 +28,6 @@ abstract class Renderer implements RendererInterface
         if (!in_array($this->getTemplateFolder(), $paths, true)) {
             $loader->addPath($this->getTemplateFolder());
         }
-
     }
 
     /**

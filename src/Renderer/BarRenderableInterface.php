@@ -8,8 +8,6 @@
 
 namespace Ndrx\Profiler\Renderer;
 
-
 interface BarRenderableInterface extends RenderableInterface
 {
-
 }

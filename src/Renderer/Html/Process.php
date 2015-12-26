@@ -42,7 +42,6 @@ class Process extends Renderer
      */
     public function getData()
     {
-
         $collectors = [];
 
         $dataCollectors = $this->profiler->getCollectors();

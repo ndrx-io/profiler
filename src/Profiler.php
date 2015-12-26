@@ -213,7 +213,7 @@ class Profiler implements ProfilerInterface
 
                 $collector->persist();
             } catch (\Exception $e) {
-                if(!$this->logger === null) {
+                if (!$this->logger === null) {
                     $this->emergency($e->getMessage(), [
                         'collector', get_class($collector)
                     ]);

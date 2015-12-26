@@ -10,5 +10,4 @@ use Ndrx\Profiler\Renderer\RendererInterface;
  */
 interface PageInterface extends RendererInterface
 {
-
 }

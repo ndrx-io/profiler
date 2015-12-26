@@ -13,11 +13,8 @@ use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\JsonPatch;
 use Ndrx\Profiler\Process;
-use Ndrx\Profiler\Renderer\BarRenderableInterface;
-use Ndrx\Profiler\Renderer\Html\Data\PhPVersion;
 use Ndrx\Profiler\Renderer\RenderableInterface;
 use Ndrx\Profiler\Renderer\RendererInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class Collector implements CollectorInterface, RenderableInterface
 {

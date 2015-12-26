@@ -9,7 +9,6 @@
 
 namespace Ndrx\Profiler\Collectors\Data;
 
-
 use Ndrx\Profiler\Collectors\Collector;
 use Ndrx\Profiler\Collectors\Contracts\StartCollectorInterface;
 use Ndrx\Profiler\Renderer\BarRenderableInterface;
@@ -44,7 +43,7 @@ abstract class Route extends Collector implements StartCollectorInterface, BarRe
 
     public function validate()
     {
-        foreach($this->data as $element) {
+        foreach ($this->data as $element) {
             $this->validator->validate($element);
         }
     }

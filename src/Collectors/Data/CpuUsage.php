@@ -54,7 +54,7 @@ class CpuUsage extends Collector implements FinalCollectorInterface, BarRenderab
 
     public function validate()
     {
-        if(!is_numeric($this->data)) {
+        if (!is_numeric($this->data)) {
             throw new \LogicException('Duration must be a numeric ' . json_encode($this->data) . ' given');
         }
     }
