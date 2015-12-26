@@ -77,7 +77,7 @@ class JsonPatch
     /**
      * @author LAHAXE Arnaud
      *
-     * @param        $patchs
+     * @param        \Generator $patchs
      * @param string $targetDocument
      *
      * @return mixed
