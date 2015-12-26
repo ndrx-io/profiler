@@ -1,0 +1,8 @@
+ {% for key, item in value  %}
+     <div class="ui progress">
+         <div class="bar" style="margin-left: {{ item.offset }}%; width: {{ item.length }}%;">
+             <div class="progress"></div>
+         </div>
+         <div class="label">{{ item.label }}</div>
+     </div>
+ {% endfor %}

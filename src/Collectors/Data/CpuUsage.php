@@ -13,8 +13,9 @@ use Ndrx\Profiler\Collectors\Contracts\FinalCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\JsonPatch;
 use Ndrx\Profiler\Process;
+use Ndrx\Profiler\Renderer\BarRenderableInterface;
 
-class CpuUsage extends Collector implements FinalCollectorInterface
+class CpuUsage extends Collector implements FinalCollectorInterface, BarRenderableInterface
 {
     protected $initialCpuUsage;
     /**

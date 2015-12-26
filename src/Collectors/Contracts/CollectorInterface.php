@@ -30,6 +30,10 @@ interface CollectorInterface
      */
     public function getPath();
 
+    /**
+     * @return string
+     */
+    public function getName();
 
     /**
      * @return array

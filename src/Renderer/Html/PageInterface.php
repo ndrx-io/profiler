@@ -1,0 +1,14 @@
+<?php
+
+namespace Ndrx\Profiler\Renderer\Html;
+
+use Ndrx\Profiler\Renderer\RendererInterface;
+
+/**
+ * Interface Bar
+ * @package Ndrx\Profiler\Renderer
+ */
+interface PageInterface extends RendererInterface
+{
+
+}

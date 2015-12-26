@@ -1,0 +1,32 @@
+{% macro recursiveKeyValue(configs) %}
+    <table class="ui very celled table" style="max-width: 90%">
+        <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, item in configs %}
+            <tr>
+
+                {% if item is iterable %}
+
+                    <td class="collapsing">{{ key }}</td>
+                    <td>
+                        {% if item is empty %}
+                            []
+                        {% else %}
+                            {{ _self.recursiveKeyValue(item) }}
+                        {% endif %}
+
+                    </td>
+                {% else %}
+                    <td class="collapsing">{{ key }}</td>
+                    <td>{{ item }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

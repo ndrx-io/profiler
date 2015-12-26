@@ -1,0 +1,93 @@
+{% import "macro.html.twig" as macros %}
+
+<table class="ui very basic table">
+    <tbody>
+    <tr>
+        <td>Method</td>
+        <td>{{ value.method }} ({{ attribute(value, 'real-method') }})</td>
+    </tr>
+    <tr>
+        <td>Uri</td>
+        <td>{{ value.uri }}</td>
+    </tr>
+    <tr>
+        <td>Script</td>
+        <td>{{ value.scriptName }}</td>
+    </tr>
+    <tr>
+        <td>Port</td>
+        <td>{{ value.port }}</td>
+    </tr>
+    <tr>
+        <td>SSL</td>
+        <td>{% if value.ssl %}Yes{% else %}No{% endif %}</td>
+    </tr>
+    <tr>
+        <td>Scheme</td>
+        <td>{{ value.scheme }}</td>
+    </tr>
+    <tr>
+        <td>Scheme</td>
+        <td>
+            <ul>
+                {% for type in attribute(value, 'accept-content-types') %}
+                    <li>{{ type }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>Etags</td>
+        <td>
+            <ul>
+                {% for item in value.etags %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>Charsets</td>
+        <td>
+            <ul>
+                {% for item in value.charsets %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>Encoding</td>
+        <td>
+            <ul>
+                {% for item in value.encodings %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>Default local</td>
+        <td>{{ attribute(value, 'default-local') }}</td>
+    </tr>
+    <tr>
+        <td>Local</td>
+        <td>{{ value.local }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Get ({{ value.data.get | length }})</h2>
+
+{{ macros.recursiveKeyValue(value.data.get) }}
+
+
+<h2>Post ({{ value.data.post | length }})</h2>
+{{ macros.recursiveKeyValue(value.data.post) }}
+
+<h2>Session ({{ value.session | length }})</h2>
+{{ macros.recursiveKeyValue(value.session) }}
+
+
+<h2>Cookies ({{ value.cookies | length }})</h2>
+{{ macros.recursiveKeyValue(value.cookies) }}

@@ -170,4 +170,12 @@ class NullProfiler implements ProfilerInterface
     {
         return new Simple();
     }
+
+    /**
+     * @return array
+     */
+    public function getCollectors()
+    {
+        return [];
+    }
 }

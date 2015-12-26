@@ -11,8 +11,9 @@ namespace Ndrx\Profiler\Collectors\Data;
 use Ndrx\Profiler\Collectors\StreamCollector;
 use \Ndrx\Profiler\Events\Log as LogEvent;
 use Ndrx\Profiler\JsonPatch;
+use Ndrx\Profiler\Renderer\BarRenderableInterface;
 
-class Log extends StreamCollector
+class Log extends StreamCollector implements BarRenderableInterface
 {
     /**
      * @author LAHAXE Arnaud
