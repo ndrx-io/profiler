@@ -95,4 +95,9 @@ interface ProfilerInterface extends LoggerAwareInterface
      * @return LoggerInterface|AbstractProcessingHandler
      */
     public function getLogger();
+
+    /**
+     * @return array
+     */
+    public function getCollectors();
 }

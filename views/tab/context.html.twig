@@ -1,0 +1,25 @@
+
+<table class="ui very basic table">
+    <tbody>
+    <tr>
+        <td>Environment</td>
+        <td>{{ value.environment }}</td>
+    </tr>
+    <tr>
+        <td>Process id</td>
+        <td>{{ attribute(value, 'process-id')  }}</td>
+    </tr>
+    <tr>
+        <td>Parent process id</td>
+        <td>{{ attribute(value, 'parent-process-id') }}</td>
+    </tr>
+    <tr>
+        <td>Date</td>
+        <td>{{ value.date }}</td>
+    </tr>
+    <tr>
+        <td>Time</td>
+        <td>{{ value.time }}</td>
+    </tr>
+    </tbody>
+</table>

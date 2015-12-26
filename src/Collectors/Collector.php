@@ -13,9 +13,13 @@ use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\DataSources\Contracts\DataSourceInterface;
 use Ndrx\Profiler\JsonPatch;
 use Ndrx\Profiler\Process;
+use Ndrx\Profiler\Renderer\BarRenderableInterface;
+use Ndrx\Profiler\Renderer\Html\Data\PhPVersion;
+use Ndrx\Profiler\Renderer\RenderableInterface;
+use Ndrx\Profiler\Renderer\RendererInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class Collector implements CollectorInterface
+abstract class Collector implements CollectorInterface, RenderableInterface
 {
     /**
      * @var mixed
@@ -104,5 +108,34 @@ abstract class Collector implements CollectorInterface
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return RendererInterface
+     *
+     * @throws \RuntimeException
+     */
+    public function getRenderer()
+    {
+        $collectorClass = get_class($this);
+        $rendererClass = '\\' . str_replace('Collectors', 'Renderer\\Html', $collectorClass);
+
+        if (!class_exists($rendererClass)) {
+            throw new \RuntimeException('Collector ' . $collectorClass . ' is renderable but ' . $rendererClass . ' does not exist');
+        }
+
+        return new $rendererClass;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        $reflectionClassName = new \ReflectionClass(get_class($this));
+        $pattern = '/([a-z])([A-Z])/';
+        return strtolower(preg_replace_callback($pattern, function ($a) {
+            return $a[1] . '-' . strtolower($a[2]);
+        }, $reflectionClassName->getShortName()));
     }
 }

@@ -1,0 +1,18 @@
+<table class="ui striped table">
+    <thead>
+    <tr>
+        <th>Level</th>
+        <th>Time</th>
+        <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for log in value %}
+        <tr>
+            <td class="collapsing">{{ log.level }}</td>
+            <td class="collapsing">{{ log.timestamp }}</td>
+            <td>{{ log.message }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

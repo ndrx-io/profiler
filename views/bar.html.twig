@@ -1,0 +1,61 @@
+<div class="profiler-bar ui menu " style="display: none">
+    {% for name, collector in collectors %}
+        {% set content = collector.content | raw %}
+        <a href="{% if not content is empty %}{{ profileUrl }}{% endif %}#{{ name }}"
+           class="item tab-collector-menu ui {% if content %}item--popup {% endif %}"
+           data-tab-id="tab-{{ name }}"
+           {% if not content %}target="_blank"{% endif %}
+        >
+            <i class="{{ collector.icon }} icon"></i>
+            {{ collector.badge }}
+        </a>
+
+        {% if not content is empty %}
+            <div class="ui flowing popup top left transition hidden">
+                <div class="ui three column divided center aligned grid">
+                    <strong>{{ collector.title }}</strong>
+
+
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <a href="#" data-toggle-profiler-bar class="right item ui">
+        <i class="fa fa-times-circle-o fa-2x"></i>
+    </a>
+</div>
+
+<div class="profiler-bar profiler-bar--minified ui menu">
+    <a href="#" data-toggle-profiler-bar class="right item ui">
+        <i class="fa fa-bug fa-2x"></i>
+    </a>
+</div>
+
+<script>
+    $('[data-toggle-profiler-bar]').click(function () {
+        $('.profiler-bar').toggle();
+    });
+</script>
+
+<style>
+    .profiler-bar {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 1000000;
+        margin: 0 !important;
+        flex-wrap: wrap;
+    }
+
+    .profiler-bar--minified {
+        position: fixed;
+        bottom: 0;
+        width: auto;
+        right: 0;
+    }
+
+    .profiler-bar .right {
+        border-left-width: 0;
+    }
+</style>

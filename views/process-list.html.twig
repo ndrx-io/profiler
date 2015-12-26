@@ -1,0 +1,10 @@
+{% extends 'app.html.twig' %}
+
+{% block content %}
+
+    {% for profile in profiles %}
+        <a href="_profiler/{{ profile.id }}">
+            {{ profile.method }} {{ profile.uri }}
+        </a><br/>
+    {% endfor %}
+{% endblock %}

@@ -12,6 +12,7 @@ namespace Ndrx\Profiler\Collectors\Data;
 use Ndrx\Profiler\Collectors\Contracts\StreamCollectorInterface;
 use Ndrx\Profiler\Collectors\StreamCollector;
 use Ndrx\Profiler\JsonPatch;
+use Ndrx\Profiler\Renderer\RendererInterface;
 
 abstract class Event extends StreamCollector implements StreamCollectorInterface
 {
@@ -48,5 +49,15 @@ abstract class Event extends StreamCollector implements StreamCollectorInterface
         $patch = $this->jsonPatch->generate($this->getPath(), JsonPatch::ACTION_ADD, $this->data, true);
         $this->dataSource->save($this->process, [$patch]);
         $this->data = [];
+    }
+
+    /**
+     * @return RendererInterface
+     *
+     * @throws \RuntimeException
+     */
+    public function getRenderer()
+    {
+        return new \Ndrx\Profiler\Renderer\Html\Data\Event();
     }
 }
