@@ -48,6 +48,7 @@ class IncludedTest extends \PHPUnit_Framework_TestCase
         $data = $this->collector->getData();
 
         $this->assertInternalType('array', $data);
+        $this->assertNotEmpty($data);
     }
 
     public function testPersist()
