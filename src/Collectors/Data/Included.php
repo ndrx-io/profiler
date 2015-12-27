@@ -33,8 +33,22 @@ class Included extends Collector implements FinalCollectorInterface
     public function validate()
     {
         if (!is_array($this->data)) {
-            throw new \LogicException('Duration must be an array ' . json_encode($this->data) . ' given');
+            throw new \LogicException('Files must be an array ' . json_encode($this->data) . ' given');
         }
+    }
+
+    /**
+     * Convert data into jsonpatch query and save it in the data source
+     * @return mixed
+     */
+    public function persist()
+    {
+        $this->validate();
+
+        $patches = $this->jsonPatch->generateArrayAdd($this->getPath(), $this->data, true);
+        $this->dataSource->save($this->process, $patches);
+
+        $this->data = [];
     }
 
     /**
